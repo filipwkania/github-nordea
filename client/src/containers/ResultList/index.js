@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import request from 'axios';
-
 import { Alert } from 'reactstrap';
 
-import ResultRow from '../ResultRow';
+import ResultRow from '../../components/ResultRow/index';
+
+import './styles.css';
 
 const githubApi = 'https://api.github.com/users';
 
@@ -36,7 +37,7 @@ class ResultList extends React.Component {
   render() {
     console.log(this.props.match.params);
     return (
-      <div className="result-list">
+      <div className="result-list container-fluid">
         <Alert color="secondary">
         ResultList
       </Alert>
