@@ -25,15 +25,31 @@ class Header extends React.Component {
     });
   };
 
-  handleKeyDown = (key) => {
-    const { searchPhrase, suggestions } = this.state;
-    switch (key) {
+  handleKeyDown = (event) => {
+    const { searchPhrase, suggestions, selectedIndex } = this.state;
+    switch (event.key) {
     case 'Enter':
-      this.fetchRepos(searchPhrase);
+      if (selectedIndex > 0) {
+        this.fetchRepos(suggestions[selectedIndex - 1]);
+      } else {
+        this.fetchRepos(searchPhrase);
+      }
       break;
     case 'ArrowDown':
-      if (suggestions.length > 0) {
-        document.getElementById(`dropdown_${suggestions[0].login}`).focus();
+      if (suggestions.length > 0 && selectedIndex < suggestions.length) {
+        event.preventDefault();
+        this.setState({ selectedIndex: selectedIndex + 1 });
+      }
+      break;
+    case 'ArrowUp':
+      if (selectedIndex > 0) {
+        event.preventDefault();
+        this.setState({ selectedIndex: selectedIndex - 1 });
+      }
+      break;
+    case 'Escape':
+      if (selectedIndex > 0) {
+        this.setState({ selectedIndex: 0 });
       }
       break;
     default:
@@ -82,17 +98,18 @@ class Header extends React.Component {
                   placeholder="username"
                   defaultValue={this.state.searchPhrase}
                   onChange={({ target: { value } }) => this.onChange(value)}
-                  onKeyDown={({ key }) => this.handleKeyDown(key)}
+                  onKeyDown={event => this.handleKeyDown(event)}
                 />
               </InputGroup>
             </DropdownToggle>
             <DropdownMenu>
               {
-                this.state.suggestions.map(item => (
+                this.state.suggestions.map((item, index) => (
                   <SearchSuggestionRow
                     key={item.id}
                     suggestion={item}
                     fetchRepos={this.fetchRepos}
+                    selected={index === this.state.selectedIndex - 1}
                   />
                 ))
               }

@@ -26,21 +26,20 @@ class ResultList extends React.Component {
 
     if (name) {
       request.get(`${githubApi}/${name}/repos?page=${page}&per_page=${perPage}`)
-          .then((res) => {
-            if (res.statusText === 'OK') {
-              this.setState({ reposList: res.data });
-            }
-          });
+        .then((res) => {
+          if (res.statusText === 'OK') {
+            this.setState({ reposList: res.data });
+          }
+        });
     }
   }
 
   render() {
-    console.log(this.props.match.params);
     return (
       <div className="result-list container-fluid">
         <Alert color="secondary">
         ResultList
-      </Alert>
+        </Alert>
         {
           this.state.reposList.map(repo => <ResultRow details={repo} key={`result_row_${repo.id}`} />)
         }
