@@ -1,8 +1,17 @@
 import React from 'react';
 
-const ResultRow = () => (
+import { Alert } from 'reactstrap';
+
+const ResultRow = ({ details }) => (
   <div>
-    Repository details
+    <Alert color="success">
+      <p>
+        Name: {details.name}
+      </p>
+      <p>
+S        Description: {details.description}
+      </p>
+    </Alert>
   </div>
 );
 

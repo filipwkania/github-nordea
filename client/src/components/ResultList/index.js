@@ -6,7 +6,7 @@ import { Alert } from 'reactstrap';
 
 import ResultRow from '../ResultRow';
 
-const githubApi = 'https://api.github.com/';
+const githubApi = 'https://api.github.com/users';
 
 class ResultList extends React.Component {
   constructor(props) {
@@ -24,10 +24,10 @@ class ResultList extends React.Component {
     const { name } = this.props.match.params;
 
     if (name) {
-      request.get(`${githubApi}users/${name}?page=${page}&per_page=${perPage}`)
+      request.get(`${githubApi}/${name}/repos?page=${page}&per_page=${perPage}`)
           .then((res) => {
             if (res.statusText === 'OK') {
-              console.log(res);
+              this.setState({ reposList: res.data });
             }
           });
     }
@@ -41,7 +41,7 @@ class ResultList extends React.Component {
         ResultList
       </Alert>
         {
-          this.state.reposList.map(repo => <ResultRow details={repo} />)
+          this.state.reposList.map(repo => <ResultRow details={repo} key={`result_row_${repo.id}`} />)
         }
       </div>
     );
