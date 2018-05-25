@@ -1,5 +1,6 @@
 {
   "extends": "airbnb",
+  "parser": "babel-eslint",
   "rules": {
     "indent": ["error", 2],
     "max-len": 0,
@@ -16,6 +17,8 @@
     "no-use-before-define": "warn",
     "react/prop-types": 1,
     "linebreak-style": 0,
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-uses-react": 1,
+    "react/jsx-uses-vars": 1
   }
 }
