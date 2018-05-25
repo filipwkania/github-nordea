@@ -5,7 +5,8 @@
   "eslintConfig": {
     "env": {
       "browser": true,
-      "node": true
+      "node": true,
+      "es6": true
     }
   },
   "dependencies": {
@@ -17,8 +18,10 @@
     "react-dom": "^16.4.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4",
-    "reactstrap": "^6.0.1",
-    "uuid": "^3.2.1"
+    "reactstrap": "^6.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1"
   },
   "scripts": {
     "start": "react-scripts start",
