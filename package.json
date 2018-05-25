@@ -1,6 +1,12 @@
 {
   "name": "express-basic",
   "version": "1.0.0",
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": true
+    }
+  },
   "private": false,
   "scripts": {
     "start": "cross-env NODE_ENV=development node ./src/app.js",
