@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import request from 'axios';
 
-import { Pagination, Grid, Sticky } from 'semantic-ui-react';
+import { Pagination, Grid, Sticky, Divider } from 'semantic-ui-react';
 
 import ResultRow from '../../components/ResultRow/index';
 import UserInfoPanel from '../../components/UserInfoPanel';
@@ -102,6 +102,7 @@ class ResultList extends React.Component {
                 </Grid>
               </Grid.Column>
               <Grid.Column className="center aligned" mobile={16}>
+                <Divider section />
                 <Pagination
                   siblingRange={0}
                   boundaryRange={1}

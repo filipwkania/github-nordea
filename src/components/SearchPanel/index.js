@@ -80,9 +80,13 @@ class SearchPanel extends React.Component {
           onSearchChange={({ target: { value } }) => this.onChange(value)}
           onResultSelect={(e, { result: { title } }) => this.onSelect(title)}
           style={{ flexGrow: 1 }}
+          placeholder="Type github username..."
         />
         <Item>
-          <Dropdown placeholder="Recent queries" />
+          <Dropdown
+            placeholder="Recent queries"
+            options={[{ text: 'Not implemented yet :)' }]}
+          />
         </Item>
       </Container>
     );
