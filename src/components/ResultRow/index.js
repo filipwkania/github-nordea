@@ -1,15 +1,16 @@
 import React from 'react';
 import propTypes from 'prop-types';
+import { Grid } from 'semantic-ui-react';
 
 const ResultRow = ({ details }) => (
-  <div>
+  <Grid.Column mobile={16} computer={8}>
     <p>
         Name: {details.name}
     </p>
     <p>
         Description: {details.description}
     </p>
-  </div>
+  </Grid.Column>
 );
 
 ResultRow.propTypes = {

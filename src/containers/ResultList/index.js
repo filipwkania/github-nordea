@@ -1,13 +1,11 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import request from 'axios';
 
-import { Pagination } from 'semantic-ui-react';
+import { Pagination, Grid, Sticky } from 'semantic-ui-react';
 
 import ResultRow from '../../components/ResultRow/index';
 import UserInfoPanel from '../../components/UserInfoPanel';
-
-import './styles.scss';
 
 const accessToken = process.env.REACT_APP_GITHUB_TOKEN;
 
@@ -61,27 +59,37 @@ class ResultList extends React.Component {
   };
 
   render() {
-    const { reposList, userData } = this.state;
+    const { reposList, userData, perPage } = this.state;
     return (
       <div className="result-list container-fluid">
         {
           this.state.userData
             &&
-            <div>
-              <UserInfoPanel userData={userData} />
-              {
-                reposList.map(repo =>
-                  (<ResultRow
-                    key={`result_row_${repo.id}`}
-                    details={repo}
-                  />))
-              }
-              <Pagination
-                onPageChange={(e, data) => this.changePage(data)}
-                totalPages={userData.public_repos}
-                activePage={this.state.page}
-              />
-            </div>
+              <Fragment>
+                <Grid container columns={2} ref={dataGrid => this.dataGrid = dataGrid}>
+                  <Grid.Column mobile={16} tablet={8} computer={4}>
+                    <Sticky context={this.dataGrid}>
+                      <UserInfoPanel userData={userData} />
+                    </Sticky>
+                  </Grid.Column>
+                  <Grid.Column mobile={16} tablet={8} computer={12}>
+                    <Grid>
+                      {
+                        reposList.map(repo =>
+                          (<ResultRow
+                            key={`result_row_${repo.id}`}
+                            details={repo}
+                          />))
+                      }
+                    </Grid>
+                  </Grid.Column>
+                </Grid>
+                <Pagination
+                  onPageChange={(e, data) => this.changePage(data)}
+                  totalPages={userData.public_repos / perPage}
+                  activePage={this.state.page}
+                />
+              </Fragment>
         }
       </div>
     );
