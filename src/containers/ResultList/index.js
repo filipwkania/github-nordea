@@ -2,9 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import request from 'axios';
 
+import { Pagination } from 'semantic-ui-react';
+
 import ResultRow from '../../components/ResultRow/index';
+import UserInfoPanel from '../../components/UserInfoPanel';
 
 import './styles.scss';
+
+const accessToken = process.env.REACT_APP_GITHUB_TOKEN;
 
 class ResultList extends React.Component {
   constructor(props) {
@@ -34,12 +39,17 @@ class ResultList extends React.Component {
     }
   }
 
+  changePage = data => this.setState(
+    { page: data.activePage },
+    () => this.fetchResults(this.state.userData.login),
+  );
+
   fetchResults = (name) => {
     const { page, perPage } = this.state;
-    request.get(`https://api.github.com/users/${name}`)
+    request.get(`https://api.github.com/users/${name}?access_token=${accessToken}`)
       .then((userRes) => {
         if (userRes.statusText === 'OK' && userRes.data.public_repos > 0) {
-          request.get(`https://api.github.com/users/${name}/repos?page=${page}&per_page=${perPage}`)
+          request.get(`https://api.github.com/users/${name}/repos?page=${page}&per_page=${perPage}&access_token=${accessToken}`)
             .then((reposRes) => {
               if (reposRes.statusText === 'OK') {
                 this.setState({ reposList: reposRes.data, userData: userRes.data });
@@ -58,10 +68,19 @@ class ResultList extends React.Component {
           this.state.userData
             &&
             <div>
-              ResultList for {userData.name} from {userData.location}
+              <UserInfoPanel userData={userData} />
               {
-                reposList.map(repo => <ResultRow details={repo} key={`result_row_${repo.id}`} />)
+                reposList.map(repo =>
+                  (<ResultRow
+                    key={`result_row_${repo.id}`}
+                    details={repo}
+                  />))
               }
+              <Pagination
+                onPageChange={(e, data) => this.changePage(data)}
+                totalPages={userData.public_repos}
+                activePage={this.state.page}
+              />
             </div>
         }
       </div>
@@ -74,7 +93,7 @@ ResultList.propTypes = {
     params: PropTypes.shape({
       name: PropTypes.string,
     }),
-  }),
+  }).isRequired,
 };
 
 export default ResultList;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
 import request from 'axios/index';
 import { Search } from 'semantic-ui-react';
@@ -69,5 +70,11 @@ class SearchPanel extends React.Component {
     );
   }
 }
+
+SearchPanel.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
 
 export default withRouter(SearchPanel);
