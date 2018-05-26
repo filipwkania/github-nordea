@@ -61,22 +61,36 @@ class ResultList extends React.Component {
   render() {
     const { reposList, userData, perPage } = this.state;
     return (
-      <div className="result-list container-fluid">
+      <div
+        className="result-list container-fluid"
+        ref={resultList => this.resultList = resultList}
+      >
         {
           this.state.userData
           &&
           <Fragment>
-            <Grid centered columns={3} ref={dataGrid => this.dataGrid = dataGrid}>
-              <Grid.Column mobile={16} tablet={8} computer={4}>
+            <Grid
+              centered
+              columns={3}
+            >
+              <Grid.Column
+                mobile={16}
+                tablet={8}
+                computer={4}
+              >
                 <Sticky
-                  context={this.dataGrid}
+                  context={this.resultList}
                   className="result-profile-sticky"
-                  offset={10}
+                  offset={100}
                 >
                   <UserInfoPanel userData={userData} />
                 </Sticky>
               </Grid.Column>
-              <Grid.Column mobile={16} tablet={8} computer={12}>
+              <Grid.Column
+                mobile={16}
+                tablet={8}
+                computer={12}
+              >
                 <Grid>
                   {
                     reposList.map(repo =>
@@ -89,6 +103,8 @@ class ResultList extends React.Component {
               </Grid.Column>
               <Grid.Column className="center aligned" mobile={16}>
                 <Pagination
+                  siblingRange={0}
+                  boundaryRange={1}
                   onPageChange={(e, data) => this.changePage(data)}
                   totalPages={userData.public_repos / perPage}
                   activePage={this.state.page}
