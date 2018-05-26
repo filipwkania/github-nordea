@@ -109,6 +109,8 @@ class ResultList extends React.Component {
                   onPageChange={(e, data) => this.changePage(data)}
                   totalPages={userData.public_repos / perPage}
                   activePage={this.state.page}
+                  firstItem={null}
+                  lastItem={null}
                 />
               </Grid.Column>
             </Grid>

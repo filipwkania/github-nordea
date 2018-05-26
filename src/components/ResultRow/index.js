@@ -9,9 +9,15 @@ const ResultRow = ({ repo }) => (
       target="_blank"
       rel="noopener noreferrer"
     >
-      <Segment>
-        <Item>
-          <Item.Content>
+      <Segment style={{ height: '100%' }}>
+        <Item style={{ height: '100%' }}>
+          <Item.Content
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              height: '100%',
+            }}
+          >
             <Item.Header
               className="ui header"
               content={repo.name}
@@ -20,7 +26,10 @@ const ResultRow = ({ repo }) => (
            updated on {new Date(repo.updated_at).toLocaleDateString()}
             </Item.Meta>
             <Item.Description
-              style={{ margin: '10px 0' }}
+              style={{
+                margin: '10px 0',
+                flexGrow: 1,
+              }}
               content={repo.description}
             />
             <Item.Extra>
