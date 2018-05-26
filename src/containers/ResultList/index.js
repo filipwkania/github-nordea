@@ -68,7 +68,11 @@ class ResultList extends React.Component {
           <Fragment>
             <Grid centered columns={3} ref={dataGrid => this.dataGrid = dataGrid}>
               <Grid.Column mobile={16} tablet={8} computer={4}>
-                <Sticky context={this.dataGrid} className="result-profile-sticky">
+                <Sticky
+                  context={this.dataGrid}
+                  className="result-profile-sticky"
+                  offset={10}
+                >
                   <UserInfoPanel userData={userData} />
                 </Sticky>
               </Grid.Column>
