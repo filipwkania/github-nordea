@@ -33,6 +33,7 @@ module.exports = {
         "semi": [
             "error",
             "always"
-        ]
+        ],
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     }
 };

@@ -1,18 +1,22 @@
 import React from 'react';
-
-import { Alert } from 'reactstrap';
+import propTypes from 'prop-types';
 
 const ResultRow = ({ details }) => (
   <div>
-    <Alert color="success">
-      <p>
+    <p>
         Name: {details.name}
-      </p>
-      <p>
-S        Description: {details.description}
-      </p>
-    </Alert>
+    </p>
+    <p>
+        Description: {details.description}
+    </p>
   </div>
 );
+
+ResultRow.propTypes = {
+  details: propTypes.shape({
+    name: propTypes.string,
+    description: propTypes.string,
+  }).isRequired,
+};
 
 export default ResultRow;
