@@ -4,7 +4,7 @@ import debounce from 'lodash.debounce';
 
 import SearchSuggestionRow from '../SearchSuggestionRow';
 
-import './styles.css';
+import './styles.scss';
 
 class Header extends React.Component {
   constructor(props) {

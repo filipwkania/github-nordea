@@ -1,0 +1,18 @@
+.search-suggestion {
+    padding: 10px 15px;
+
+    img {
+        width: 50px;
+        height: 50px;
+    }
+
+    &:hover {
+        background: #cce5ff;
+        cursor: pointer;
+    }
+
+    span {
+        word-break: break-all;
+    }
+}
+

@@ -4,7 +4,7 @@ import Header from '../../components/Header';
 import Main from '../../components/Main';
 import Footer from '../../components/Footer';
 
-import './styles.css';
+import './styles.scss';
 
 const App = () => (
   <div className="app">

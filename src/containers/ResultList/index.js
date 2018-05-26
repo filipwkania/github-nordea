@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import request from 'axios';
-import { Alert } from 'reactstrap';
 
 import ResultRow from '../../components/ResultRow/index';
 
-import './styles.css';
+import './styles.scss';
 
 const githubApi = 'https://api.github.com/users';
 
@@ -37,9 +36,7 @@ class ResultList extends React.Component {
   render() {
     return (
       <div className="result-list container-fluid">
-        <Alert color="secondary">
         ResultList
-        </Alert>
         {
           this.state.reposList.map(repo => <ResultRow details={repo} key={`result_row_${repo.id}`} />)
         }
