@@ -5,10 +5,14 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import App from './containers/App';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render((
-  <BrowserRouter>
-    <Route path="/" component={App} />
-  </BrowserRouter>
-), document.getElementById('root'));
+require('dotenv').config();
+
+ReactDOM.render(
+  (
+    <BrowserRouter>
+      <Route path="/" component={App} />
+    </BrowserRouter>
+  ), document.getElementById('root'),
+);
 
 registerServiceWorker();
