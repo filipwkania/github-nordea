@@ -20,6 +20,14 @@
     margin-bottom: 10px;
 }
 
+.result-item {
+    transition: background 200ms linear;
+}
+
+.result-item:hover {
+    background: rgba(0,0,0,.02) !important;
+}
+
 main {
     margin-top: 100px;
 }

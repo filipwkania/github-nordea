@@ -9,7 +9,10 @@ const ResultRow = ({ repo }) => (
       target="_blank"
       rel="noopener noreferrer"
     >
-      <Segment style={{ height: '100%' }}>
+      <Segment
+        style={{ height: '100%' }}
+        className="result-item"
+      >
         <Item style={{ height: '100%' }}>
           <Item.Content
             style={{
