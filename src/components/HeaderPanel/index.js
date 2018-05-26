@@ -5,7 +5,7 @@ import SearchPanel from '../SearchPanel';
 
 
 const HeaderPanel = () => (
-  <Header className="app-header">
+  <Header className="app-header ui top fixed menu main center aligned">
     <SearchPanel />
   </Header>
 );

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
 import request from 'axios/index';
-import { Search } from 'semantic-ui-react';
+import { Search, Dropdown, Item, Image, Container, Popup } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 
 const accessToken = process.env.REACT_APP_GITHUB_TOKEN;
@@ -24,10 +24,7 @@ class SearchPanel extends React.Component {
     });
   };
 
-  onSelect = (value) => {
-    console.log(value);
-    this.props.history.push(`/${value}`);
-  };
+  onSelect = value => this.props.history.push(`/${value}`);
 
   formatSearchResults = data => data.map(item => ({
     title: item.login,
@@ -36,7 +33,7 @@ class SearchPanel extends React.Component {
 
   fetchSuggestions = debounce(() => {
     this.setState({ isLoading: true }, () => {
-      request.get(`https://api.github.com/search/users?q=${this.state.searchPhrase}&page=1&per_page=10&access_token=${accessToken}`)
+      request.get(`https://api.github.com/search/users?q=${this.state.searchPhrase}&access_token=${accessToken}`)
         .then((res) => {
           if (res.statusText === 'OK') {
             this.setState({
@@ -59,15 +56,31 @@ class SearchPanel extends React.Component {
     } = this.state;
 
     return (
-      <Search
-        className="search-panel-input"
-        value={searchPhrase}
-        results={searchResults}
-        loading={isLoading}
-        showNoResults={searchResults.length === 0}
-        onSearchChange={({ target: { value } }) => this.onChange(value)}
-        onResultSelect={(e, { result: { title } }) => this.onSelect(title)}
-      />
+      <Container>
+        <Popup
+          trigger={
+            <Item data-content="">
+              <a href="https://www.linkedin.com/in/filip-kania-876a5095/" target="_blank">
+                <Image avatar src="https://avatars1.githubusercontent.com/u/1859589?s=100&u=2d4be0f7b0207dcd0c9f5f17ed20a1027c9e27e5&v=4" />
+              </a>
+            </Item>
+          }
+          content="Visit my linked in"
+        />
+        <Search
+          className="search-panel-input item"
+          value={searchPhrase}
+          results={searchResults}
+          loading={isLoading}
+          showNoResults={searchResults.length === 0}
+          onSearchChange={({ target: { value } }) => this.onChange(value)}
+          onResultSelect={(e, { result: { title } }) => this.onSelect(title)}
+          style={{ flexGrow: 1 }}
+        />
+        <Item>
+          <Dropdown placeholder="Recent queries" />
+        </Item>
+      </Container>
     );
   }
 }
