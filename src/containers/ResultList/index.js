@@ -6,8 +6,6 @@ import ResultRow from '../../components/ResultRow/index';
 
 import './styles.scss';
 
-const githubApi = 'https://api.github.com/users';
-
 class ResultList extends React.Component {
   constructor(props) {
     super(props);
@@ -16,6 +14,7 @@ class ResultList extends React.Component {
       page: 1,
       perPage: 20,
       reposList: [],
+      userData: false,
     };
   }
 
@@ -37,20 +36,33 @@ class ResultList extends React.Component {
 
   fetchResults = (name) => {
     const { page, perPage } = this.state;
-    request.get(`${githubApi}/${name}/repos?page=${page}&per_page=${perPage}`)
-      .then((res) => {
-        if (res.statusText === 'OK') {
-          this.setState({ reposList: res.data });
+    request.get(`https://api.github.com/users/${name}`)
+      .then((userRes) => {
+        if (userRes.statusText === 'OK' && userRes.data.public_repos > 0) {
+          request.get(`https://api.github.com/users/${name}/repos?page=${page}&per_page=${perPage}`)
+            .then((reposRes) => {
+              if (reposRes.statusText === 'OK') {
+                this.setState({ reposList: reposRes.data, userData: userRes.data });
+              }
+            });
+          this.setState({ reposList: [], userData: userRes.data });
         }
       });
   };
 
   render() {
+    const { reposList, userData } = this.state;
     return (
       <div className="result-list container-fluid">
-        ResultList
         {
-          this.state.reposList.map(repo => <ResultRow details={repo} key={`result_row_${repo.id}`} />)
+          this.state.userData
+            &&
+            <div>
+              ResultList for {userData.name} from {userData.location}
+              {
+                reposList.map(repo => <ResultRow details={repo} key={`result_row_${repo.id}`} />)
+              }
+            </div>
         }
       </div>
     );
