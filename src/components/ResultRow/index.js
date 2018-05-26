@@ -1,20 +1,41 @@
 import React from 'react';
 import propTypes from 'prop-types';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Item, Label } from 'semantic-ui-react';
 
-const ResultRow = ({ details }) => (
+const ResultRow = ({ repo }) => (
   <Grid.Column mobile={16} computer={8}>
-    <p>
-        Name: {details.name}
-    </p>
-    <p>
-        Description: {details.description}
-    </p>
+    <Item>
+      <Item.Content>
+        <Item.Header as="a" content={repo.name} />
+        <Item.Meta>
+           updated at {new Date(repo.updated_at).toLocaleDateString()}
+        </Item.Meta>
+        <Item.Description content={repo.description} />
+        <Item.Extra>
+          {
+            repo.language
+            &&
+            <Label icon="code" content={repo.language} />
+          }
+          {
+            repo.stargazers_count > 0
+            &&
+            <Label icon="star" content={repo.stargazers_count} />
+          }
+
+          {
+            repo.forks_count > 0
+            &&
+            <Label icon="fork" content={repo.forks_count} />
+          }
+        </Item.Extra>
+      </Item.Content>
+    </Item>
   </Grid.Column>
 );
 
 ResultRow.propTypes = {
-  details: propTypes.shape({
+  repo: propTypes.shape({
     name: propTypes.string,
     description: propTypes.string,
   }).isRequired,
