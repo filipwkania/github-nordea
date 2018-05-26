@@ -1,6 +1,6 @@
 import React from 'react';
 import propTypes from 'prop-types';
-import { Grid, Item, Label, Segment } from 'semantic-ui-react';
+import { Grid, Item, Label, Segment, Popup } from 'semantic-ui-react';
 
 const ResultRow = ({ repo }) => (
   <Grid.Column mobile={16} computer={8}>
@@ -39,25 +39,40 @@ const ResultRow = ({ repo }) => (
               {
                 repo.language
                 &&
-                <Label
-                  icon="code"
-                  content={repo.language}
+                <Popup
+                  content="Top language"
+                  size="small"
+                  trigger={
+                    <Label
+                      icon="code"
+                      content={repo.language}
+                    />}
                 />
               }
               {
                 repo.stargazers_count > 0
                 &&
-                <Label
-                  icon="star"
-                  content={repo.stargazers_count}
+                <Popup
+                  content="Stars"
+                  size="small"
+                  trigger={
+                    <Label
+                      icon="star"
+                      content={repo.stargazers_count}
+                    />}
                 />
               }
               {
                 repo.forks_count > 0
                 &&
-                <Label
-                  icon="fork"
-                  content={repo.forks_count}
+                <Popup
+                  content="Forks"
+                  size="small"
+                  trigger={
+                    <Label
+                      icon="fork"
+                      content={repo.forks_count}
+                    />}
                 />
               }
             </Item.Extra>

@@ -1,18 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Card, Image, Icon } from 'semantic-ui-react';
+import { Card, Image, Icon, Popup } from 'semantic-ui-react';
 
 const UserInfoPanel = ({ userData }) => (
   <Card className="user-info-panel">
     <Card>
-      <a
-        href={userData.html_url}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Image src={userData.avatar_url} />
-      </a>
+      <Popup
+        content="Visit this user on GitHub!"
+        trigger={
+          <a
+            href={userData.html_url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Image src={userData.avatar_url} />
+          </a>}
+      />
       <Card.Content>
         <Card.Header>{userData.name}</Card.Header>
         <Card.Meta>Joined {new Date(userData.created_at).toLocaleDateString()}</Card.Meta>
