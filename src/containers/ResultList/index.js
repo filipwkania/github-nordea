@@ -66,7 +66,7 @@ class ResultList extends React.Component {
           this.state.userData
             &&
               <Fragment>
-                <Grid container columns={2} ref={dataGrid => this.dataGrid = dataGrid}>
+                <Grid centered columns={3} ref={dataGrid => this.dataGrid = dataGrid}>
                   <Grid.Column mobile={16} tablet={8} computer={4}>
                     <Sticky context={this.dataGrid}>
                       <UserInfoPanel userData={userData} />
@@ -83,12 +83,14 @@ class ResultList extends React.Component {
                       }
                     </Grid>
                   </Grid.Column>
+                  <Grid.Column className="center aligned">
+                    <Pagination
+                      onPageChange={(e, data) => this.changePage(data)}
+                      totalPages={userData.public_repos / perPage}
+                      activePage={this.state.page}
+                    />
+                  </Grid.Column>
                 </Grid>
-                <Pagination
-                  onPageChange={(e, data) => this.changePage(data)}
-                  totalPages={userData.public_repos / perPage}
-                  activePage={this.state.page}
-                />
               </Fragment>
         }
       </div>
