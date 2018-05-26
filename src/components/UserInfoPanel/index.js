@@ -6,7 +6,13 @@ import { Card, Image, Icon } from 'semantic-ui-react';
 const UserInfoPanel = ({ userData }) => (
   <Card className="user-info-panel">
     <Card>
-      <Image src={userData.avatar_url} />
+      <a
+        href={userData.html_url}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Image src={userData.avatar_url} />
+      </a>
       <Card.Content>
         <Card.Header>{userData.name}</Card.Header>
         <Card.Meta>Joined {new Date(userData.created_at).toLocaleDateString()}</Card.Meta>

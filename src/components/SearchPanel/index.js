@@ -60,7 +60,11 @@ class SearchPanel extends React.Component {
         <Popup
           trigger={
             <Item data-content="">
-              <a href="https://www.linkedin.com/in/filip-kania-876a5095/" target="_blank">
+              <a
+                href="https://www.linkedin.com/in/filip-kania-876a5095/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Image avatar src="https://avatars1.githubusercontent.com/u/1859589?s=100&u=2d4be0f7b0207dcd0c9f5f17ed20a1027c9e27e5&v=4" />
               </a>
             </Item>
