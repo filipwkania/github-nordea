@@ -29,3 +29,9 @@ main {
         position: inherit !important;
     }
 }
+
+@media only screen and (max-width: 374px) {
+    .ui.pagination.menu {
+        font-size: 0.9rem !important;
+    }
+}
