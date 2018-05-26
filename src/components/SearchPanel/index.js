@@ -1,8 +1,11 @@
 import React from 'react';
 import debounce from 'lodash.debounce';
 import request from 'axios/index';
-
+import { connect } from 'react-redux';
 import { Search } from 'semantic-ui-react';
+import { withRouter, Redirect } from 'react-router-dom';
+
+import setSearchResults from '../../redux/SearchPanelRedux/actions';
 
 const accessToken = process.env.REACT_APP_GITHUB_TOKEN;
 
@@ -12,8 +15,9 @@ class SearchPanel extends React.Component {
 
     this.state = {
       searchPhrase: '',
-      suggestions: [],
+      searchResults: [],
       isLoading: false,
+      redirect: false,
     };
   }
 
@@ -22,6 +26,11 @@ class SearchPanel extends React.Component {
       this.fetchSuggestions();
     });
   };
+
+  onSelect = (value) => {
+    console.log(value);
+    this.props.history.push(`/${value}`);
+  }
 
   formatSearchResults = data => data.map(item => ({
     title: item.login,
@@ -34,31 +43,45 @@ class SearchPanel extends React.Component {
         .then((res) => {
           if (res.statusText === 'OK') {
             this.setState({
-              suggestions: this.formatSearchResults(res.data.items),
+              searchResults: this.formatSearchResults(res.data.items),
               isLoading: false,
             });
           }
         }).catch(() => {
           this.setState({
-            suggestions: [],
+            searchResults: [],
             isLoading: false,
           });
         });
     });
-  }, 300);
+  }, 350);
 
   render() {
-    const { searchPhrase, suggestions, isLoading } = this.state;
+    const {
+      searchPhrase, searchResults, isLoading, redirect,
+    } = this.state;
+
+    if (redirect) {
+      return (<Redirect to={`/${searchPhrase}`} />);
+    }
+
     return (
       <Search
         value={searchPhrase}
-        results={suggestions}
+        results={searchResults}
         loading={isLoading}
-        showNoResults={suggestions.length === 0}
+        showNoResults={searchResults.length === 0}
         onSearchChange={({ target: { value } }) => this.onChange(value)}
+        onResultSelect={(e, { result: { title } }) => this.onSelect(title)}
       />
     );
   }
 }
 
-export default SearchPanel;
+export default withRouter(SearchPanel);
+
+// const mapStateToProps = () => ({
+//   searchResults: setSearchResults,
+// });
+//
+// export default connect(mapStateToProps)(SearchPanel);

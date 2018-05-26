@@ -7,7 +7,7 @@ const Main = () => (
   <main>
     <Switch>
       <Route exact path="/" component={ResultList} />
-      <Route path="/repo/:name" component={ResultList} />
+      <Route path="/:name" component={ResultList} />
     </Switch>
   </main>
 );
