@@ -33,7 +33,7 @@ const ResultRow = ({ repo }) => (
                 margin: '10px 0',
                 flexGrow: 1,
               }}
-              content={repo.description}
+              content={repo.description || 'No description provided.'}
             />
             <Item.Extra>
               {
