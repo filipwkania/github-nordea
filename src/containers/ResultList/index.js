@@ -64,34 +64,34 @@ class ResultList extends React.Component {
       <div className="result-list container-fluid">
         {
           this.state.userData
-            &&
-              <Fragment>
-                <Grid centered columns={3} ref={dataGrid => this.dataGrid = dataGrid}>
-                  <Grid.Column mobile={16} tablet={8} computer={4}>
-                    <Sticky context={this.dataGrid}>
-                      <UserInfoPanel userData={userData} />
-                    </Sticky>
-                  </Grid.Column>
-                  <Grid.Column mobile={16} tablet={8} computer={12}>
-                    <Grid>
-                      {
-                        reposList.map(repo =>
-                          (<ResultRow
-                            key={`result_row_${repo.id}`}
-                            details={repo}
-                          />))
-                      }
-                    </Grid>
-                  </Grid.Column>
-                  <Grid.Column className="center aligned">
-                    <Pagination
-                      onPageChange={(e, data) => this.changePage(data)}
-                      totalPages={userData.public_repos / perPage}
-                      activePage={this.state.page}
-                    />
-                  </Grid.Column>
+          &&
+          <Fragment>
+            <Grid centered columns={3} ref={dataGrid => this.dataGrid = dataGrid}>
+              <Grid.Column mobile={16} tablet={8} computer={4}>
+                <Sticky context={this.dataGrid} className="result-profile-sticky">
+                  <UserInfoPanel userData={userData} />
+                </Sticky>
+              </Grid.Column>
+              <Grid.Column mobile={16} tablet={8} computer={12}>
+                <Grid>
+                  {
+                    reposList.map(repo =>
+                      (<ResultRow
+                        key={`result_row_${repo.id}`}
+                        repo={repo}
+                      />))
+                  }
                 </Grid>
-              </Fragment>
+              </Grid.Column>
+              <Grid.Column className="center aligned" mobile={16}>
+                <Pagination
+                  onPageChange={(e, data) => this.changePage(data)}
+                  totalPages={userData.public_repos / perPage}
+                  activePage={this.state.page}
+                />
+              </Grid.Column>
+            </Grid>
+          </Fragment>
         }
       </div>
     );

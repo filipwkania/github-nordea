@@ -1,0 +1,23 @@
+.search-panel-input > .results {
+    max-height: 300px;
+    overflow: auto;
+}
+
+.search-panel-input > .results > .result > .image {
+    min-width: 5em !important;
+    border-radius: 0 !important;
+}
+
+.search-panel-input > .results > .result  {
+    display: flex !important;
+}
+
+.item > .content > .a {
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 767px) {
+    .result-profile-sticky > div:nth-child(2) {
+        position: inherit !important;
+    }
+}

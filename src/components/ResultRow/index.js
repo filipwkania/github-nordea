@@ -6,8 +6,11 @@ const ResultRow = ({ repo }) => (
   <Grid.Column mobile={16} computer={8}>
     <Item>
       <Item.Content>
-        <Item.Header as="a" content={repo.name} />
-        <Item.Meta>
+        <Item.Header
+          className="ui header"
+          content={repo.name}
+        />
+        <Item.Meta className="small">
            updated at {new Date(repo.updated_at).toLocaleDateString()}
         </Item.Meta>
         <Item.Description content={repo.description} />
@@ -15,18 +18,27 @@ const ResultRow = ({ repo }) => (
           {
             repo.language
             &&
-            <Label icon="code" content={repo.language} />
+            <Label
+              icon="code"
+              content={repo.language}
+            />
           }
           {
             repo.stargazers_count > 0
             &&
-            <Label icon="star" content={repo.stargazers_count} />
+            <Label
+              icon="star"
+              content={repo.stargazers_count}
+            />
           }
 
           {
             repo.forks_count > 0
             &&
-            <Label icon="fork" content={repo.forks_count} />
+            <Label
+              icon="fork"
+              content={repo.forks_count}
+            />
           }
         </Item.Extra>
       </Item.Content>

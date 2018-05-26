@@ -36,7 +36,7 @@ class SearchPanel extends React.Component {
 
   fetchSuggestions = debounce(() => {
     this.setState({ isLoading: true }, () => {
-      request.get(`https://api.github.com/search/users?q=${this.state.searchPhrase}&access_token=${accessToken}`)
+      request.get(`https://api.github.com/search/users?q=${this.state.searchPhrase}&page=1&per_page=10&access_token=${accessToken}`)
         .then((res) => {
           if (res.statusText === 'OK') {
             this.setState({
@@ -51,7 +51,7 @@ class SearchPanel extends React.Component {
           });
         });
     });
-  }, 350);
+  }, 400);
 
   render() {
     const {
@@ -60,6 +60,7 @@ class SearchPanel extends React.Component {
 
     return (
       <Search
+        className="search-panel-input"
         value={searchPhrase}
         results={searchResults}
         loading={isLoading}
