@@ -20,18 +20,30 @@ class ResultList extends React.Component {
   }
 
   componentDidMount() {
-    const { page, perPage } = this.state;
     const { name } = this.props.match.params;
 
     if (name) {
-      request.get(`${githubApi}/${name}/repos?page=${page}&per_page=${perPage}`)
-        .then((res) => {
-          if (res.statusText === 'OK') {
-            this.setState({ reposList: res.data });
-          }
-        });
+      this.fetchResults(name);
     }
   }
+
+  componentWillReceiveProps(nextProps) {
+    const { name } = nextProps.match.params;
+
+    if (name && this.props.match.params.name !== name) {
+      this.fetchResults(name);
+    }
+  }
+
+  fetchResults = (name) => {
+    const { page, perPage } = this.state;
+    request.get(`${githubApi}/${name}/repos?page=${page}&per_page=${perPage}`)
+      .then((res) => {
+        if (res.statusText === 'OK') {
+          this.setState({ reposList: res.data });
+        }
+      });
+  };
 
   render() {
     return (

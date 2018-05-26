@@ -1,11 +1,8 @@
 import React from 'react';
 import debounce from 'lodash.debounce';
 import request from 'axios/index';
-import { connect } from 'react-redux';
 import { Search } from 'semantic-ui-react';
-import { withRouter, Redirect } from 'react-router-dom';
-
-import setSearchResults from '../../redux/SearchPanelRedux/actions';
+import { withRouter } from 'react-router-dom';
 
 const accessToken = process.env.REACT_APP_GITHUB_TOKEN;
 
@@ -17,7 +14,6 @@ class SearchPanel extends React.Component {
       searchPhrase: '',
       searchResults: [],
       isLoading: false,
-      redirect: false,
     };
   }
 
@@ -58,12 +54,8 @@ class SearchPanel extends React.Component {
 
   render() {
     const {
-      searchPhrase, searchResults, isLoading, redirect,
+      searchPhrase, searchResults, isLoading,
     } = this.state;
-
-    if (redirect) {
-      return (<Redirect to={`/${searchPhrase}`} />);
-    }
 
     return (
       <Search
@@ -79,9 +71,3 @@ class SearchPanel extends React.Component {
 }
 
 export default withRouter(SearchPanel);
-
-// const mapStateToProps = () => ({
-//   searchResults: setSearchResults,
-// });
-//
-// export default connect(mapStateToProps)(SearchPanel);
