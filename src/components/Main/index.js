@@ -6,8 +6,8 @@ import ResultList from '../../containers/ResultList';
 import SuggestedPages from '../../containers/SuggestedPages';
 
 const Main = () => (
-  <main>
-    <Container style={{ marginBottom: 30 }}>
+  <main className="fill-content">
+    <Container style={{ marginBottom: 30 }} className="fill-content">
       <Switch>
         <Route exact path="/" component={SuggestedPages} />
         <Route path="/:name" component={ResultList} />

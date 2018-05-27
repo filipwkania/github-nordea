@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
 import request from 'axios/index';
-import { Search, Dropdown, Item, Image, Container, Popup, Responsive } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
+import { Search, Dropdown, Item, Image, Container, Popup, Responsive } from 'semantic-ui-react';
+
+import formatSearchResults from '../../utils/formatSearchResults';
 
 const accessToken = process.env.REACT_APP_GITHUB_TOKEN;
 
@@ -26,18 +28,13 @@ class SearchPanel extends React.Component {
 
   onSelect = value => this.props.history.push(`/${value}`);
 
-  formatSearchResults = data => data.map(item => ({
-    title: item.login,
-    image: item.avatar_url,
-  }));
-
   fetchSuggestions = debounce(() => {
     this.setState({ isLoading: true }, () => {
       request.get(`https://api.github.com/search/users?q=${this.state.searchPhrase}&access_token=${accessToken}`)
         .then((res) => {
           if (res.statusText === 'OK') {
             this.setState({
-              searchResults: this.formatSearchResults(res.data.items),
+              searchResults: formatSearchResults(res.data.items, 'user'),
               isLoading: false,
             });
           }
@@ -87,7 +84,7 @@ class SearchPanel extends React.Component {
         <Responsive as={Item} minWidth={768}>
           <Dropdown
             placeholder="Recent queries"
-            options={[{ text: 'Not implemented yet :)' }]}
+            options={[{ text: 'Not implemented yet :)', key: 'first_drop_item' }]}
           />
         </Responsive>
       </Container>

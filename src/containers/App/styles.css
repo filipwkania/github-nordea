@@ -1,12 +1,19 @@
 .app {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
+}
+
+.fill-content {
+    display: flex !important;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 .search-panel-input > .results {
     max-height: 300px;
     overflow: auto;
+    z-index: 1001 !important;
 }
 
 .search-panel-input > .results > .result > .image {
@@ -24,6 +31,7 @@
 
 .app-header {
     margin-bottom: 10px;
+    z-index: 1001 !important;
 }
 
 .result-item {
