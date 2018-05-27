@@ -11,7 +11,7 @@ const MobileMenu = ({ links }, context) => (
     icon="bars"
     simple
   >
-    <Dropdown.Menu>
+    <Dropdown.Menu direction="left">
       {
         links.map(({ icon, path, name }) =>
           (<Dropdown.Item

@@ -46,8 +46,8 @@ class HeaderPanel extends React.Component {
     return (
       <Header className="app-header ui top menu fixed center aligned">
         <Container>
-          <MobileMenu links={links} />
           <SearchPanel updateHistory={this.getSearchHistory} />
+          <MobileMenu links={links} />
           <WebMenu links={links} searchHistory={this.state.searchHistory} />
         </Container>
       </Header>
