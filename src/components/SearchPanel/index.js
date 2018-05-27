@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
 import request from 'axios/index';
 import { withRouter } from 'react-router-dom';
-import { Search, Dropdown, Item, Image, Container, Popup, Responsive } from 'semantic-ui-react';
+import { Search } from 'semantic-ui-react';
 
 import formatSearchResults from '../../utils/formatSearchResults';
 
@@ -53,41 +53,17 @@ class SearchPanel extends React.Component {
     } = this.state;
 
     return (
-      <Container>
-        <Responsive minWidth={768}>
-          <Popup
-            trigger={
-              <Item data-content="">
-                <a
-                  href="https://www.linkedin.com/in/filip-kania-876a5095/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Image avatar src="https://avatars1.githubusercontent.com/u/1859589?s=100&u=2d4be0f7b0207dcd0c9f5f17ed20a1027c9e27e5&v=4" />
-                </a>
-              </Item>
-            }
-            content="Visit my LinkedIn"
-          />
-        </Responsive>
-        <Search
-          className="search-panel-input item"
-          value={searchPhrase}
-          results={searchResults}
-          loading={isLoading}
-          showNoResults={searchResults.length === 0}
-          onSearchChange={({ target: { value } }) => this.onChange(value)}
-          onResultSelect={(e, { result: { title } }) => this.onSelect(title)}
-          style={{ flexGrow: 1 }}
-          placeholder="Type github username..."
-        />
-        <Responsive as={Item} minWidth={768}>
-          <Dropdown
-            placeholder="Recent queries"
-            options={[{ text: 'Not implemented yet :)', key: 'first_drop_item' }]}
-          />
-        </Responsive>
-      </Container>
+      <Search
+        className="search-panel-input item"
+        value={searchPhrase}
+        results={searchResults}
+        loading={isLoading}
+        showNoResults={searchResults.length === 0}
+        onSearchChange={({ target: { value } }) => this.onChange(value)}
+        onResultSelect={(e, { result: { title } }) => this.onSelect(title)}
+        style={{ flexGrow: 1 }}
+        placeholder="Type github username..."
+      />
     );
   }
 }
