@@ -4,6 +4,19 @@
     flex-direction: column;
 }
 
+.app-footer {
+    height: 100px;
+    padding: 15px 0 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app-footer a,
+.app-footer div {
+    height: fit-content;
+}
+
 .fill-content {
     display: flex !important;
     flex-direction: column;
