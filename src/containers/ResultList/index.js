@@ -91,7 +91,7 @@ class ResultList extends React.Component {
                 <Sticky
                   context={this.resultList}
                   className="result-profile-sticky"
-                  offset={75}
+                  offset={90}
                 >
                   <UserInfoPanel userData={userData} />
                 </Sticky>

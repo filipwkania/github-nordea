@@ -61,7 +61,7 @@
 }
 
 main {
-    margin-top: 75px;
+    margin-top: 90px;
 }
 
 @media only screen and (max-width: 767px) {
@@ -90,5 +90,15 @@ main {
 
     .ui.segment.result-item {
         word-break: break-word;
+    }
+}
+
+@media only screen and (max-width: 321px) {
+    .app-footer .item {
+        margin: 0 3px;
+    }
+
+    .search-panel-input {
+        max-width: 250px
     }
 }
