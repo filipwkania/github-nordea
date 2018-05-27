@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import v4 from 'uuid';
 import { Menu, Responsive } from 'semantic-ui-react';
 
-const WebMenu = (props, context) => (
+const WebMenu = ({ links }, context) => (
   <Responsive
     minWidth={1024}
     as={Menu}
@@ -12,8 +13,9 @@ const WebMenu = (props, context) => (
     }}
   >
     {
-      props.links.map(({ icon, path, name }) => (
+      links.map(({ icon, path, name }) => (
         <Menu.Item
+          key={v4()}
           icon={icon}
           content={name}
           onClick={() => context.router.history.push(path)}
@@ -23,11 +25,11 @@ const WebMenu = (props, context) => (
 );
 
 WebMenu.propTypes = {
-  links: PropTypes.shape({
+  links: PropTypes.arrayOf(PropTypes.shape({
     icon: PropTypes.string,
     path: PropTypes.string,
     name: PropTypes.string,
-  }).isRequired,
+  })).isRequired,
 };
 
 WebMenu.contextTypes = {

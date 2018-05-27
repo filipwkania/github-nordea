@@ -9,11 +9,10 @@ const Main = () => (
   <main className="fill-content">
     <Container style={{ marginBottom: 30 }} className="fill-content">
       <Switch>
-        <Route exact path="/" component={SuggestedPages} />
-        <Route exact path="/info" component={SuggestedPages} />
-        <Route exact path="/starred" component={SuggestedPages} />
-        <Route exact path="/forked" component={SuggestedPages} />
-        <Route exact path="/followed" component={SuggestedPages} />
+        <Route exact path="/" render={props => <SuggestedPages {...props} />} />
+        <Route exact path="/starred"render={props => <SuggestedPages name="starred" {...props} />} />
+        <Route exact path="/forked"render={props => <SuggestedPages name="forked" {...props} />} />
+        <Route exact path="/followed"render={props => <SuggestedPages name="followed" {...props} />} />
         <Route path="/:name" component={ResultList} />
       </Switch>
     </Container>

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import v4 from 'uuid';
 import { Dropdown, Responsive } from 'semantic-ui-react';
 
-const MobileMenu = (props, context) => (
+const MobileMenu = ({ links }, context) => (
   <Responsive
     maxWidth={1023}
     as={Dropdown}
@@ -13,8 +13,9 @@ const MobileMenu = (props, context) => (
   >
     <Dropdown.Menu>
       {
-        props.links.map(({ icon, path, name }) =>
+        links.map(({ icon, path, name }) =>
           (<Dropdown.Item
+            key={v4()}
             icon={icon}
             content={name}
             onClick={() => context.router.history.push(path)}
@@ -25,15 +26,15 @@ const MobileMenu = (props, context) => (
 );
 
 MobileMenu.propTypes = {
-  links: PropTypes.shape({
+  links: PropTypes.arrayOf(PropTypes.shape({
     icon: PropTypes.string,
     path: PropTypes.string,
     name: PropTypes.string,
-  }).isRequired,
+  })).isRequired,
 };
 
 MobileMenu.contextTypes = {
   router: PropTypes.object,
 };
 
-export default withRouter(MobileMenu);
+export default MobileMenu;

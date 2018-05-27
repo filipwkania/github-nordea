@@ -7,9 +7,9 @@ import MobileMenu from '../MenuPanel/Mobile';
 
 const links = [
   {
-    name: 'Info',
-    icon: 'info',
-    path: '/info',
+    name: 'Home',
+    icon: 'home',
+    path: '/',
   }, {
     name: 'Most starred',
     icon: 'star',

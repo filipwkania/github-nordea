@@ -107,7 +107,7 @@ class ResultList extends React.Component {
                   siblingRange={0}
                   boundaryRange={1}
                   onPageChange={(e, data) => this.changePage(data)}
-                  totalPages={userData.public_repos / perPage}
+                  totalPages={Math.ceil(userData.public_repos / perPage)}
                   activePage={this.state.page}
                   firstItem={null}
                   lastItem={null}
