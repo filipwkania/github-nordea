@@ -23,11 +23,9 @@ class SuggestedPages extends React.Component {
     this.state = {
       starred: [],
       forked: [],
-      followed: [],
       loading: {
         starred: true,
         forked: true,
-        followed: true,
       },
       activeItem: 'info',
     };
@@ -67,17 +65,13 @@ class SuggestedPages extends React.Component {
   };
 
   renderItem = (name) => {
-    const {
-      starred, forked, followed,
-    } = this.state;
+    const { starred, forked } = this.state;
 
     switch (name) {
     case 'starred':
       return starred.map(repo => <ResultRow key={v4()} repo={repo} />);
     case 'forked':
       return forked.map(repo => <ResultRow key={v4()} repo={repo} />);
-    // case 'followed':
-    //   return followed.map(repo => <ResultRow key={v4()} repo={repo} />);
     default:
       return <InfoPanel />;
     }

@@ -26,7 +26,31 @@ class SearchPanel extends React.Component {
     });
   };
 
-  onSelect = value => this.props.history.push(`/${value}`);
+  onSelect = ({ title, image }) => {
+    this.addSearchToStorage(title, image);
+    this.props.history.push(`/${title}`);
+  };
+
+  addSearchToStorage = (login) => {
+    if (window) {
+      let data = sessionStorage.getItem('githubSearchHistory');
+      if (data) {
+        data = JSON.parse(data).filter(item => item.text !== login);
+        data = [{
+          key: login, text: login, value: login,
+        }, ...data];
+        if (data.length > 10) {
+          data.pop();
+        }
+      } else {
+        data = [{
+          key: login, text: login, value: login,
+        }];
+      }
+      sessionStorage.setItem('githubSearchHistory', JSON.stringify(data));
+      this.props.updateHistory();
+    }
+  };
 
   fetchSuggestions = debounce(() => {
     this.setState({ isLoading: true }, () => {
@@ -60,7 +84,7 @@ class SearchPanel extends React.Component {
         loading={isLoading}
         showNoResults={searchResults.length === 0}
         onSearchChange={({ target: { value } }) => this.onChange(value)}
-        onResultSelect={(e, { result: { title } }) => this.onSelect(title)}
+        onResultSelect={(e, { result }) => this.onSelect(result)}
         style={{ flexGrow: 1 }}
         placeholder="Type github username..."
       />
@@ -69,6 +93,7 @@ class SearchPanel extends React.Component {
 }
 
 SearchPanel.propTypes = {
+  updateHistory: PropTypes.func,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,

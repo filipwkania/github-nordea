@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Item, Button, Grid } from 'semantic-ui-react';
+import { Item, Button } from 'semantic-ui-react';
 
 const Footer = () => (
   <footer

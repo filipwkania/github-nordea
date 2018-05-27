@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import v4 from 'uuid';
-import { Menu, Responsive } from 'semantic-ui-react';
+import { Menu, Responsive, Dropdown, Item } from 'semantic-ui-react';
 
-const WebMenu = ({ links }, context) => (
+const WebMenu = ({ links, searchHistory }, context) => (
   <Responsive
     minWidth={1024}
     as={Menu}
@@ -21,6 +21,15 @@ const WebMenu = ({ links }, context) => (
           onClick={() => context.router.history.push(path)}
         />))
     }
+    <Item>
+      <Dropdown
+        placeholder="Recent searches..."
+        selection
+        options={searchHistory}
+        onChange={(e, data) => context.router.history.push(`/${data.value}`)}
+        noResultsMessage="Nothing yet."
+      />
+    </Item>
   </Responsive>
 );
 
@@ -30,6 +39,11 @@ WebMenu.propTypes = {
     path: PropTypes.string,
     name: PropTypes.string,
   })).isRequired,
+  searchHistory: PropTypes.arrayOf(PropTypes.shape({
+    text: PropTypes.string,
+    value: PropTypes.string,
+    image: PropTypes.string,
+  })),
 };
 
 WebMenu.contextTypes = {

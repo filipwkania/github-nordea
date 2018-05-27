@@ -20,21 +20,39 @@ const links = [
     icon: 'fork',
     path: '/forked',
   },
-  {
-    name: 'Most followed',
-    icon: 'users',
-    path: '/followed',
-  },
 ];
 
-const HeaderPanel = () => (
-  <Header className="app-header ui top menu fixed center aligned">
-    <Container>
-      <MobileMenu links={links} />
-      <SearchPanel />
-      <WebMenu links={links} />
-    </Container>
-  </Header>
-);
+class HeaderPanel extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      searchHistory: [],
+    };
+  }
+
+  componentDidMount() {
+    this.getSearchHistory();
+  }
+
+  getSearchHistory = () => {
+    if (window) {
+      const searchHistory = JSON.parse(sessionStorage.getItem('githubSearchHistory')) || [];
+      this.setState({ searchHistory });
+    }
+  };
+
+  render() {
+    return (
+      <Header className="app-header ui top menu fixed center aligned">
+        <Container>
+          <MobileMenu links={links} />
+          <SearchPanel updateHistory={this.getSearchHistory} />
+          <WebMenu links={links} searchHistory={this.state.searchHistory} />
+        </Container>
+      </Header>
+    );
+  }
+}
 
 export default HeaderPanel;
