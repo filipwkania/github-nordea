@@ -1,4 +1,5 @@
 import React from 'react';
+import { Container } from 'semantic-ui-react';
 
 import HeaderPanel from '../../components/HeaderPanel';
 import Main from '../../components/Main';
@@ -7,11 +8,11 @@ import Footer from '../../components/Footer';
 import './styles.css';
 
 const App = () => (
-  <div className="app">
+  <Container className="fill-content">
     <HeaderPanel />
     <Main />
     <Footer />
-  </div>
+  </Container>
 );
 
 export default App;

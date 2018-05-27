@@ -1,5 +1,6 @@
 .app {
     min-height: 100vh;
+    max-height: 100vh;
     display: flex;
     flex-direction: column;
 }
@@ -42,9 +43,13 @@
     background: rgba(0,0,0,.02) !important;
 }
 
+.home-page-content {
+    overflow-y: auto;
+    margin-top: 1em !important;
+}
+
 main {
-    margin-top: 100px;
-    flex-grow: 1;
+    margin-top: 75px;
 }
 
 @media only screen and (max-width: 767px) {
@@ -69,5 +74,9 @@ main {
 
     .extra > .ui.label {
         margin-top: 3px;
+    }
+
+    .ui.segment.result-item {
+        word-break: break-word;
     }
 }

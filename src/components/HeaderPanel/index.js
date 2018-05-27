@@ -1,34 +1,38 @@
 import React from 'react';
-import { Header, Container, Item, Responsive, Dropdown, Icon, Button } from 'semantic-ui-react';
+import { Header, Container } from 'semantic-ui-react';
 
 import SearchPanel from '../SearchPanel';
+import WebMenu from '../MenuPanel/Web';
+import MobileMenu from '../MenuPanel/Mobile';
 
+const links = [
+  {
+    name: 'Info',
+    icon: 'info',
+    path: '/info',
+  }, {
+    name: 'Most starred',
+    icon: 'star',
+    path: '/starred',
+  },
+  {
+    name: 'Most forked',
+    icon: 'fork',
+    path: '/forked',
+  },
+  {
+    name: 'Most followed',
+    icon: 'users',
+    path: '/followed',
+  },
+];
 
 const HeaderPanel = () => (
-  <Header className="app-header ui top fixed menu main center aligned">
+  <Header className="app-header ui top menu fixed center aligned">
     <Container>
-      <Button
-        basic
-        size="small"
-        style={{ borderRadius: 0, boxShadow: 'none' }}
-        onClick={() => this.props.history.push('/')}
-      >
-        <Icon
-          name="bars"
-          style={{
-            margin: 0,
-            fontSize: 24,
-            color: 'grey',
-          }}
-        />
-      </Button>
+      <MobileMenu links={links} />
       <SearchPanel />
-      <Responsive as={Item} minWidth={768}>
-        <Dropdown
-          placeholder="Settings"
-          options={[{ text: 'Not implemented yet :)', key: 'first_drop_item' }]}
-        />
-      </Responsive>
+      <WebMenu links={links} />
     </Container>
   </Header>
 );

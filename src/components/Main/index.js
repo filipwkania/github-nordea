@@ -10,6 +10,10 @@ const Main = () => (
     <Container style={{ marginBottom: 30 }} className="fill-content">
       <Switch>
         <Route exact path="/" component={SuggestedPages} />
+        <Route exact path="/info" component={SuggestedPages} />
+        <Route exact path="/starred" component={SuggestedPages} />
+        <Route exact path="/forked" component={SuggestedPages} />
+        <Route exact path="/followed" component={SuggestedPages} />
         <Route path="/:name" component={ResultList} />
       </Switch>
     </Container>

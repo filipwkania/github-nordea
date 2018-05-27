@@ -1,12 +1,10 @@
 import React from 'react';
 import request from 'axios/index';
 import v4 from 'uuid';
-import { Tab, Grid } from 'semantic-ui-react';
+import { Grid, Container } from 'semantic-ui-react';
 
-import LoaderIndicator from '../../components/LoaderIndicator';
-
-import formatSearchResults from '../../utils/formatSearchResults';
 import ResultRow from '../../components/ResultRow';
+import HomeInfoPanel from '../../components/InfoPage';
 
 const accessToken = process.env.REACT_APP_GITHUB_TOKEN;
 
@@ -27,6 +25,7 @@ class SuggestedPages extends React.Component {
       loadingStarred: true,
       loadingForked: true,
       loadingFollowed: true,
+      activeItem: 'info',
     };
   }
 
@@ -51,53 +50,29 @@ class SuggestedPages extends React.Component {
       });
   };
 
+  renderHomeItem = (name) => {
+    switch (name) {
+    case 'info':
+      return <HomeInfoPanel />;
+    case 'starred':
+      return this.state.starred.map(repo => <ResultRow key={v4()} repo={repo} />);
+    default:
+      break;
+    }
+  };
+
   render() {
     const {
-      starred, forked, followed, loadingStarred, loadingForked, loadingFollowed,
+      starred, forked, followed, loadingStarred, loadingForked, loadingFollowed, activeItem,
     } = this.state;
-    const panes = [
-      {
-        menuItem: { key: v4(), icon: 'star', content: 'Most starred repos' },
-        render: () => (
-          <Tab.Pane className="fill-content">
-            {
-              loadingStarred ? <LoaderIndicator key={v4()} />
-                : (
-                  <Grid>
-                    {
-                      starred.map(repo => <ResultRow key={v4()} repo={repo} />)
-                    }
-                  </Grid>
-                )
-            }
-          </Tab.Pane>),
-      },
-      {
-        menuItem: { key: v4(), icon: 'fork', content: 'Most forked repos' },
-        render: () => (
-          <Tab.Pane className="fill-content">
-            {
-              loadingForked ? <LoaderIndicator key={v4()} />
-                : forked.map(Item => <Item />)
-            }
-          </Tab.Pane>),
-      },
-      {
-        menuItem: { key: v4(), icon: 'users', content: 'Most followed users' },
-        render: () => (
-          <Tab.Pane className="fill-content">
-            {
-              loadingFollowed ? <LoaderIndicator key={v4()} />
-                : followed.map(Item => <Item />)
-            }
-          </Tab.Pane>),
-      },
-    ];
     return (
-      <Tab
-        className="fill-content"
-        panes={panes}
-      />
+      <Container className="fill-content">
+        <Grid className="home-page-content fill-content">
+          {
+            this.renderHomeItem(activeItem)
+          }
+        </Grid>
+      </Container>
     );
   }
 }

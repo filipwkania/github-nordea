@@ -29,10 +29,8 @@ const UserInfoPanel = ({ userData }) => (
         }
       </Card.Content>
       <Card.Content extra>
-        <a>
-          <Icon name="github" />
-          {userData.public_repos} public repos
-        </a>
+        <Icon name="github" />
+        {userData.public_repos} public repos
       </Card.Content>
     </Card>
   </Card>
