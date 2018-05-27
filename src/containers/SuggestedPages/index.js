@@ -84,9 +84,6 @@ class SuggestedPages extends React.Component {
   };
 
   render() {
-    console.log(this.props.name);
-    console.log(this.state.loading);
-    console.log(this.state.loading[this.props.name]);
     return (
       <Container className="fill-content">
         <Grid className="home-page-content fill-content">

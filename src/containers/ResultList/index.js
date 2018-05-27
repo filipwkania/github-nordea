@@ -6,6 +6,7 @@ import { Pagination, Grid, Sticky, Divider } from 'semantic-ui-react';
 
 import ResultRow from '../../components/ResultRow/index';
 import UserInfoPanel from '../../components/UserInfoPanel';
+import LoadingIndicator from '../../components/LoaderIndicator';
 
 const accessToken = process.env.REACT_APP_GITHUB_TOKEN;
 
@@ -18,6 +19,7 @@ class ResultList extends React.Component {
       perPage: 20,
       reposList: [],
       userData: false,
+      loading: true,
     };
   }
 
@@ -44,25 +46,27 @@ class ResultList extends React.Component {
 
   fetchResults = (name) => {
     const { page, perPage } = this.state;
-    request.get(`https://api.github.com/users/${name}?access_token=${accessToken}`)
-      .then((userRes) => {
-        if (userRes.statusText === 'OK' && userRes.data.public_repos > 0) {
-          request.get(`https://api.github.com/users/${name}/repos?page=${page}&per_page=${perPage}&access_token=${accessToken}`)
-            .then((reposRes) => {
-              if (reposRes.statusText === 'OK') {
-                this.setState({ reposList: reposRes.data, userData: userRes.data });
-              }
-            });
-          this.setState({ reposList: [], userData: userRes.data });
-        }
-      });
+    this.setState({ loading: true }, () => {
+      request.get(`https://api.github.com/users/${name}?access_token=${accessToken}`)
+        .then((userRes) => {
+          if (userRes.statusText === 'OK' && userRes.data.public_repos > 0) {
+            request.get(`https://api.github.com/users/${name}/repos?page=${page}&per_page=${perPage}&access_token=${accessToken}`)
+              .then((reposRes) => {
+                if (reposRes.statusText === 'OK') {
+                  this.setState({ reposList: reposRes.data, userData: userRes.data, loading: false });
+                }
+              });
+            this.setState({ reposList: [], userData: userRes.data, loading: false });
+          }
+        });
+    });
   };
 
   render() {
     const { reposList, userData, perPage } = this.state;
     return (
       <div
-        className="result-list container-fluid"
+        className="result-list container-fluid fill-content"
         ref={resultList => this.resultList = resultList}
       >
         {
@@ -70,6 +74,7 @@ class ResultList extends React.Component {
           &&
           <Fragment>
             <Grid
+              className="fill-content"
               centered
               columns={3}
             >
@@ -87,19 +92,24 @@ class ResultList extends React.Component {
                 </Sticky>
               </Grid.Column>
               <Grid.Column
+                className="fill-content"
                 mobile={16}
                 tablet={8}
                 computer={12}
               >
-                <Grid>
-                  {
-                    reposList.map(repo =>
-                      (<ResultRow
-                        key={`result_row_${repo.id}`}
-                        repo={repo}
-                      />))
-                  }
-                </Grid>
+                {
+                  this.state.loading ? <LoadingIndicator />
+                    : (
+                      <Grid>
+                        {
+                          reposList.map(repo =>
+                            (<ResultRow
+                              key={`result_row_${repo.id}`}
+                              repo={repo}
+                            />))
+                        }
+                      </Grid>)
+                }
               </Grid.Column>
               <Grid.Column className="center aligned" mobile={16}>
                 <Divider section />
