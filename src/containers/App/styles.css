@@ -95,7 +95,7 @@ main {
 
 @media only screen and (max-width: 321px) {
     .app-footer .item {
-        margin: 0 3px;
+        margin: 0 3px !important;
     }
 
     .search-panel-input {

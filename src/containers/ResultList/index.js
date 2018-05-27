@@ -63,6 +63,8 @@ class ResultList extends React.Component {
           } else {
             this.setState({ reposList: [], userData: userRes.data, loading: false });
           }
+        }).catch(() => {
+          this.context.router.history.push('/404');
         });
     });
   };
@@ -164,6 +166,10 @@ ResultList.propTypes = {
       name: PropTypes.string,
     }),
   }).isRequired,
+};
+
+ResultList.contextTypes = {
+  router: PropTypes.object,
 };
 
 export default ResultList;
