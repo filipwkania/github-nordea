@@ -126,7 +126,7 @@ class ResultList extends React.Component {
                 }
               </Grid.Column>
               <Grid.Column className="center aligned" mobile={16}>
-                <Divider section verticalAlign="bottom" />
+                <Divider section />
                 {
                   userData.public_repos > perPage
                   &&
