@@ -2,13 +2,12 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import request from 'axios';
 
-import { Pagination, Grid, Sticky, Divider, Item, Image } from 'semantic-ui-react';
+import { Pagination, Grid, Sticky, Divider } from 'semantic-ui-react';
 
 import ResultRow from '../../components/ResultRow/index';
 import UserInfoPanel from '../../components/UserInfoPanel';
 import LoadingIndicator from '../../components/LoaderIndicator';
-
-import spaceman from '../../res/spacemanSmall.gif';
+import PageNotFound from '../../components/PageNotFound';
 
 const accessToken = process.env.REACT_APP_GITHUB_TOKEN;
 
@@ -120,26 +119,17 @@ class ResultList extends React.Component {
                 {
                   userData.public_repos === 0
                   &&
-                  <Item
-                    className="fill-content"
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <Image src={spaceman} />
-                    <h3>This user has no public repos!</h3>
-                  </Item>
+                  <PageNotFound
+                    message="This user has no public repos!"
+                    style={{ marginTop: '2em' }}
+                  />
                 }
               </Grid.Column>
               <Grid.Column className="center aligned" mobile={16}>
+                <Divider section verticalAlign="bottom" />
                 {
                   userData.public_repos > perPage
                   &&
-                  <Fragment>
-                    <Divider section />
                     <Pagination
                       siblingRange={0}
                       boundaryRange={1}
@@ -149,7 +139,6 @@ class ResultList extends React.Component {
                       firstItem={null}
                       lastItem={null}
                     />
-                  </Fragment>
                 }
               </Grid.Column>
             </Grid>
