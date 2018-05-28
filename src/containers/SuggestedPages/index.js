@@ -50,8 +50,14 @@ class SuggestedPages extends React.Component {
         document.removeEventListener('scroll', this.trackScrolling);
         this.fetchContent(name);
       } else {
+        if (window) {
+          window.scrollTo(0, 0);
+        }
+        document.addEventListener('scroll', this.trackScrolling);
         this.setState({ activeItem: name });
       }
+    } else {
+      document.removeEventListener('scroll', this.trackScrolling);
     }
   }
 
