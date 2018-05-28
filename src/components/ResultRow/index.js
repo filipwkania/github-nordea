@@ -1,5 +1,6 @@
 import React from 'react';
 import propTypes from 'prop-types';
+import Timeago from 'react-timeago';
 import { Grid, Item, Label, Segment, Popup } from 'semantic-ui-react';
 
 const ResultRow = ({ repo }) => (
@@ -26,7 +27,7 @@ const ResultRow = ({ repo }) => (
               content={repo.name}
             />
             <Item.Meta style={{ fontSize: 12, color: 'rgba(0,0,0,.4)' }}>
-           updated on {new Date(repo.updated_at).toLocaleDateString()}
+                last updated {<Timeago date={repo.updated_at} />}
             </Item.Meta>
             <Item.Description
               style={{
