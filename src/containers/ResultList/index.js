@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import request from 'axios';
 
-import { Pagination, Grid, Sticky, Divider } from 'semantic-ui-react';
+import { Pagination, Grid, Sticky, Divider, Item, Dropdown } from 'semantic-ui-react';
 
 import ResultRow from '../../components/ResultRow/index';
 import UserInfoPanel from '../../components/UserInfoPanel';
@@ -24,6 +24,7 @@ class ResultList extends React.Component {
       reposList: [],
       userData: false,
       loading: true,
+      jumpToOptions: [],
     };
   }
 
@@ -45,16 +46,21 @@ class ResultList extends React.Component {
     }
   }
 
-  changePage = data => this.setState(
-    { page: data.activePage },
-    () => {
-      this.fetchResults(this.state.userData.login);
-      this.context.router.history.push(`/${this.props.match.params.name}/${data.activePage}`);
-    },
-  );
+  changePage = (page) => {
+    if (page !== this.state.page) {
+      this.setState(
+        { page },
+        () => {
+          this.fetchResults(this.state.userData.login);
+          this.context.router.history.push(`/${this.props.match.params.name}/${page}`);
+        },
+      );
+    }
+  };
 
   fetchResults = (name) => {
     const { page, perPage } = this.state;
+
     this.setState({ loading: true }, () => {
       request.get(`https://api.github.com/users/${name}?access_token=${accessToken}`)
         .then((userRes) => {
@@ -62,7 +68,19 @@ class ResultList extends React.Component {
             request.get(`https://api.github.com/users/${name}/repos?page=${page}&per_page=${perPage}&access_token=${accessToken}`)
               .then((reposRes) => {
                 if (reposRes.statusText === 'OK') {
-                  this.setState({ reposList: reposRes.data, userData: userRes.data, loading: false });
+                  const jumpToOptions = [];
+                  const totalPages = Math.ceil(userRes.data.public_repos / perPage);
+                  if (totalPages > 5) {
+                    for (let i = 1; i <= totalPages; i++) {
+                      jumpToOptions.push({
+                        text: i,
+                        value: i,
+                      });
+                    }
+                  }
+                  this.setState({
+                    reposList: reposRes.data, userData: userRes.data, loading: false, jumpToOptions,
+                  });
                 } else {
                   this.setState({ reposList: [], userData: userRes.data, loading: false });
                 }
@@ -77,7 +95,10 @@ class ResultList extends React.Component {
   };
 
   render() {
-    const { reposList, userData, perPage } = this.state;
+    const {
+      reposList, userData, perPage, jumpToOptions, page,
+    } = this.state;
+
     return (
       <div
         className="result-list container-fluid fill-content"
@@ -141,12 +162,28 @@ class ResultList extends React.Component {
                     <Pagination
                       siblingRange={0}
                       boundaryRange={1}
-                      onPageChange={(e, data) => this.changePage(data)}
+                      onPageChange={(e, { activePage }) => this.changePage(activePage)}
                       totalPages={Math.ceil(userData.public_repos / perPage)}
-                      activePage={this.state.page}
+                      activePage={page}
                       firstItem={null}
                       lastItem={null}
                     />
+                }
+                {
+                  userData.public_repos / perPage > 5
+                  &&
+                  <Item style={{ marginTop: '1em' }}>
+                    <span>Jump to page: </span>
+                    <Dropdown
+                      upward
+                      placeholder="1"
+                      compact
+                      selection
+                      defaultValue={page}
+                      onChange={(e, { value }) => this.changePage(value)}
+                      options={jumpToOptions}
+                    />
+                  </Item>
                 }
               </Grid.Column>
             </Grid>
