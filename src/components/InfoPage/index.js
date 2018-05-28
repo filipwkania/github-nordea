@@ -1,3 +1,5 @@
+/* eslint max-len: 0 */
+/* eslint react/no-unescaped-entities: 0 */
 import React from 'react';
 import { Container, List } from 'semantic-ui-react';
 
@@ -29,7 +31,7 @@ const InfoPage = () => (
               Pagination is included at the bottom of the page, allowing to fetch next batch of repos.
             <br />
               An example of autoloading new content is included in the menu
-              pages: 'Most starred' and 'Most forked'.
+              pages: "Most starred" and "Most forked".
             <br />
               Aforementioned pages are fetching top starred and top forked repos from whole GitHub.
           </List.Description>
