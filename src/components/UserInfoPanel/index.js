@@ -18,7 +18,7 @@ const UserInfoPanel = ({ userData }) => (
           </a>}
       />
       <Card.Content>
-        <Card.Header>{userData.name}</Card.Header>
+        <Card.Header>{userData.name || userData.login}</Card.Header>
         <Card.Meta>Joined {new Date(userData.created_at).toLocaleDateString()}</Card.Meta>
         {
           userData.bio && userData.bio.length > 0

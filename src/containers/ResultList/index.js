@@ -2,14 +2,12 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import request from 'axios';
 
-import { Pagination, Grid, Sticky, Divider, Item, Dropdown } from 'semantic-ui-react';
+import { Pagination, Grid, Sticky, Divider, Item, Dropdown, Segment, Icon } from 'semantic-ui-react';
 
 import ResultRow from '../../components/ResultRow/index';
 import UserInfoPanel from '../../components/UserInfoPanel';
 import LoadingIndicator from '../../components/LoaderIndicator';
 import PageNotFound from '../../components/PageNotFound';
-
-const accessToken = process.env.REACT_APP_GITHUB_TOKEN;
 
 class ResultList extends React.Component {
   constructor(props) {
@@ -18,6 +16,23 @@ class ResultList extends React.Component {
     let { page } = this.props.match.params;
     page = (page && !isNaN(+page)) ? +page : 1;
 
+    this.accessToken = process.env.REACT_APP_GITHUB_TOKEN;
+
+    this.sortByOptions = {
+      created: {
+        text: 'Last created',
+        value: '&sort=created',
+      },
+      updated: {
+        text: 'Last updated',
+        value: '&sort=updated',
+      },
+      default: {
+        text: 'Default',
+        value: '',
+      },
+    };
+
     this.state = {
       page,
       perPage: 20,
@@ -25,8 +40,10 @@ class ResultList extends React.Component {
       userData: false,
       loading: true,
       jumpToOptions: [],
+      sortBy: '',
     };
   }
+
 
   componentDidMount() {
     const { name } = this.props.match.params;
@@ -58,14 +75,25 @@ class ResultList extends React.Component {
     }
   };
 
+  changeSortMethod = (sortBy) => {
+    if (sortBy !== this.state.sortBy) {
+      this.setState(
+        { sortBy },
+        () => {
+          this.fetchResults(this.state.userData.login);
+        },
+      );
+    }
+  };
+
   fetchResults = (name) => {
     const { page, perPage } = this.state;
 
     this.setState({ loading: true }, () => {
-      request.get(`https://api.github.com/users/${name}?access_token=${accessToken}`)
+      request.get(`https://api.github.com/users/${name}?access_token=${this.accessToken}`)
         .then((userRes) => {
           if (userRes.statusText === 'OK' && userRes.data.public_repos > 0) {
-            request.get(`https://api.github.com/users/${name}/repos?page=${page}&per_page=${perPage}&access_token=${accessToken}`)
+            request.get(`https://api.github.com/users/${name}/repos?access_token=${this.accessToken}&page=${page}&per_page=${perPage}${this.state.sortBy}`)
               .then((reposRes) => {
                 if (reposRes.statusText === 'OK') {
                   const jumpToOptions = [];
@@ -124,6 +152,17 @@ class ResultList extends React.Component {
                   offset={90}
                 >
                   <UserInfoPanel userData={userData} />
+                  <Segment>
+                    <Icon name="options" /> <span>Settings</span>
+                    <Item style={{ marginTop: '1em' }}>
+                      <Dropdown
+                        placeholder="Sort method"
+                        selection
+                        onChange={(e, { value }) => this.changeSortMethod(value)}
+                        options={this.sortByOptions}
+                      />
+                    </Item>
+                  </Segment>
                 </Sticky>
               </Grid.Column>
               <Grid.Column
