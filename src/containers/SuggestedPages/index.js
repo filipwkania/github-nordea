@@ -109,7 +109,11 @@ class SuggestedPages extends React.Component {
   render() {
     return (
       <Container className="fill-content">
-        <Grid className="home-page-content fill-content" id="results">
+        <Grid
+          className="home-page-content fill-content"
+          id="results"
+          style={{ overflow: 'hidden' }}
+        >
           {
             this.state.loading[this.props.name] ?
               <LoaderIndicator />

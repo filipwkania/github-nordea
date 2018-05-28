@@ -15,7 +15,7 @@ const InfoPage = () => (
           <List.Description>
               The main search bar is aimed at users. Search is connected to the
               GitHub API, and is listing suggestions as we type. <br />GitHub by
-              default is sorting suggestions with 'best match'.
+              default is sorting suggestions with the best match according to their algorithm.
           </List.Description>
         </List.Content>
       </List.Item>
@@ -40,7 +40,7 @@ const InfoPage = () => (
         <List.Content>
           <List.Header>Search history</List.Header>
           <List.Description>
-              List of last 10 searches is accessible from the menu under "Recent searchers". Data is bound to session.
+              List of last 10 searches is accessible from the menu under "Recent searchers". History is bound to session.
           </List.Description>
         </List.Content>
       </List.Item>
@@ -49,7 +49,17 @@ const InfoPage = () => (
         <List.Content>
           <List.Header>Responsiveness</List.Header>
           <List.Description>
-              This application is fully operative on most computers, tablets and mobile phones.
+              This application is operative on most computers, tablets and mobile phones.
+          </List.Description>
+        </List.Content>
+      </List.Item>
+      <br />
+      <List.Item>
+        <List.Icon name="wrench" />
+        <List.Content>
+          <List.Header>Tools</List.Header>
+          <List.Description>
+            JavaScript, React, Semantic UI, GitHub APIv3
           </List.Description>
         </List.Content>
       </List.Item>
