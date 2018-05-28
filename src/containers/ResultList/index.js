@@ -15,8 +15,11 @@ class ResultList extends React.Component {
   constructor(props) {
     super(props);
 
+    let { page } = this.props.match.params;
+    page = (page && !isNaN(+page)) ? +page : 1;
+
     this.state = {
-      page: 1,
+      page,
       perPage: 20,
       reposList: [],
       userData: false,
@@ -153,6 +156,7 @@ ResultList.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
       name: PropTypes.string,
+      page: PropTypes.string,
     }),
   }).isRequired,
 };

@@ -14,7 +14,8 @@ const Main = () => (
         <Route exact path="/starred"render={props => <SuggestedPages name="starred" {...props} />} />
         <Route exact path="/forked"render={props => <SuggestedPages name="forked" {...props} />} />
         <Route exact path="/404" render={props => <PageNotFound message="User not found! Try another search." {...props} />} />
-        <Route path="/:name" component={ResultList} />
+        <Route exact path="/:name/:page" component={ResultList} />
+        <Route exact path="/:name/" component={ResultList} />
       </Switch>
     </Container>
   </main>
