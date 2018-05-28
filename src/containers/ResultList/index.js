@@ -39,13 +39,18 @@ class ResultList extends React.Component {
     const { name } = nextProps.match.params;
 
     if (name && this.props.match.params.name !== name) {
-      this.fetchResults(name);
+      this.setState({ page: 1 }, () => {
+        this.fetchResults(name);
+      });
     }
   }
 
   changePage = data => this.setState(
     { page: data.activePage },
-    () => this.fetchResults(this.state.userData.login),
+    () => {
+      this.fetchResults(this.state.userData.login);
+      this.context.router.history.push(`/${this.props.match.params.name}/${data.activePage}`);
+    },
   );
 
   fetchResults = (name) => {

@@ -44,7 +44,7 @@ class SuggestedPages extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { name } = nextProps;
-    console.log(name);
+
     if (name && this.props.name !== name) {
       if (this.state[name].length === 0) {
         document.removeEventListener('scroll', this.trackScrolling);
