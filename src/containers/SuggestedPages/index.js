@@ -22,7 +22,10 @@ class SuggestedPages extends React.Component {
 
     this.state = {
       perPage: 20,
-      page: 1,
+      page: {
+        starred: 1,
+        forked: 1,
+      },
       starred: [],
       forked: [],
       loading: {
@@ -66,7 +69,7 @@ class SuggestedPages extends React.Component {
   }
 
   fetchContent = (name) => {
-    request.get(`${gitRequests[name]}&per_page=${this.state.perPage}&page=${this.state.page}`)
+    request.get(`${gitRequests[name]}&per_page=${this.state.perPage}&page=${this.state.page[name]}`)
       .then((res) => {
         if (res.statusText === 'OK') {
           this.setState({
@@ -90,10 +93,14 @@ class SuggestedPages extends React.Component {
   trackScrolling = () => {
     const wrappedElement = document.getElementById('results');
     if (this.isBottom(wrappedElement)) {
+      const { page, activeItem } = this.state;
       document.removeEventListener('scroll', this.trackScrolling);
-      this.setState({ page: this.state.page + 1, loadingMore: true }, () => {
-        this.fetchContent(this.state.activeItem);
-      });
+      this.setState(
+        { page: { ...page, [activeItem]: page[activeItem] + 1 }, loadingMore: true },
+        () => {
+          this.fetchContent(this.state.activeItem);
+        },
+      );
     }
   };
 
