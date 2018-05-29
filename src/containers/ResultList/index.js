@@ -8,7 +8,6 @@ import ResultRow from '../../components/ResultRow/index';
 import UserInfoPanel from '../../components/UserInfoPanel';
 import LoadingIndicator from '../../components/LoaderIndicator';
 import PageNotFound from '../../components/PageNotFound';
-
 import sortByOptions from '../../utils/userReposSortOptions';
 
 class ResultList extends React.Component {
@@ -59,24 +58,16 @@ class ResultList extends React.Component {
 
   changePage = (page) => {
     if (page !== this.state.page) {
-      this.setState(
-        { page },
-        () => {
-          this.fetchResults(this.state.userData.login, true);
-          this.context.router.history.push(`/${this.props.match.params.name}/${page}`);
-        },
-      );
+      this.setState({ page }, () => {
+        this.fetchResults(this.state.userData.login, true);
+        this.context.router.history.push(`/${this.props.match.params.name}/${page}`);
+      });
     }
   };
 
   changeSortMethod = (sortBy) => {
     if (sortBy !== this.state.sortBy) {
-      this.setState(
-        { sortBy, page: 1 },
-        () => {
-          this.fetchResults(this.state.userData.login);
-        },
-      );
+      this.setState({ sortBy, page: 1 }, () => this.fetchResults(this.state.userData.login));
     }
   };
 
@@ -86,9 +77,7 @@ class ResultList extends React.Component {
     if (this.state.autoload && this.isBottom(wrappedElement)) {
       this.setState(
         { page: this.state.page + 1, loadingMore: true, autoload: false },
-        () => {
-          this.fetchMoreResults();
-        },
+        () => this.fetchMoreResults(),
       );
     }
   };
@@ -126,7 +115,7 @@ class ResultList extends React.Component {
                   const jumpToOptions = [];
                   const totalPages = Math.ceil(userRes.data.public_repos / perPage);
                   if (totalPages > 5) {
-                    for (let i = 1; i <= totalPages; i++) {
+                    for (let i = 1; i <= totalPages; i += 1) {
                       jumpToOptions.push({
                         text: i,
                         value: i,
@@ -135,14 +124,26 @@ class ResultList extends React.Component {
                   }
                   const autoload = fromPagination ? false : userRes.data.public_repos > perPage;
                   this.setState({
-                    reposList: reposRes.data, userData: userRes.data, loading: false, jumpToOptions, autoload,
+                    reposList: reposRes.data,
+                    userData: userRes.data,
+                    loading: false,
+                    jumpToOptions,
+                    autoload,
                   });
                 } else {
-                  this.setState({ reposList: [], userData: userRes.data, loading: false });
+                  this.setState({
+                    reposList: [],
+                    userData: userRes.data,
+                    loading: false,
+                  });
                 }
               });
           } else {
-            this.setState({ reposList: [], userData: userRes.data, loading: false });
+            this.setState({
+              reposList: [],
+              userData: userRes.data,
+              loading: false,
+            });
           }
         }).catch(() => {
           this.context.router.history.push('/404');
@@ -161,87 +162,86 @@ class ResultList extends React.Component {
         ref={resultList => this.resultList = resultList}
       >
         {
-          userData ?
-            (
-              <Fragment>
-                <Grid
-                  className="fill-content"
-                  centered
-                  columns={3}
+          userData ? (
+            <Fragment>
+              <Grid
+                className="fill-content"
+                centered
+                columns={3}
+              >
+                <Grid.Column
+                  mobile={16}
+                  tablet={8}
+                  computer={4}
                 >
-                  <Grid.Column
-                    mobile={16}
-                    tablet={8}
-                    computer={4}
+                  <Sticky
+                    context={this.resultList}
+                    className="result-profile-sticky"
+                    offset={90}
                   >
-                    <Sticky
-                      context={this.resultList}
-                      className="result-profile-sticky"
-                      offset={90}
-                    >
-                      <UserInfoPanel userData={userData} />
-                      <Segment>
-                        <Icon name="options" /> <span>Settings</span>
-                        <Checkbox
-                          toggle
-                          label="Autoload content"
-                          defaultChecked={userData.public_repos > perPage}
-                          onChange={(e, data) => this.setState({ autoload: data.checked })}
-                          style={{
-                            marginTop: '1em',
-                            display: 'block',
-                          }}
+                    <UserInfoPanel userData={userData} />
+                    <Segment>
+                      <Icon name="options" /> <span>Settings</span>
+                      <Checkbox
+                        toggle
+                        label="Autoload content"
+                        defaultChecked={userData.public_repos > perPage}
+                        onChange={(e, data) => this.setState({ autoload: data.checked })}
+                        style={{
+                          marginTop: '1em',
+                          display: 'block',
+                        }}
+                      />
+                      <Item style={{ marginTop: '1em' }}>
+                        <Dropdown
+                          placeholder="Sort method"
+                          selection
+                          onChange={(e, { value }) => this.changeSortMethod(value)}
+                          options={sortByOptions}
                         />
-                        <Item style={{ marginTop: '1em' }}>
-                          <Dropdown
-                            placeholder="Sort method"
-                            selection
-                            onChange={(e, { value }) => this.changeSortMethod(value)}
-                            options={sortByOptions}
-                          />
-                        </Item>
-                      </Segment>
-                    </Sticky>
-                  </Grid.Column>
-                  <Grid.Column
-                    className="fill-content"
-                    mobile={16}
-                    tablet={8}
-                    computer={12}
-                  >
-                    {
-                      this.state.loading ? <LoadingIndicator />
-                        : (
-                          <Grid id="results">
-                            {
-                              reposList.map(repo =>
-                                (<ResultRow
-                                  key={`result_row_${repo.id}`}
-                                  repo={repo}
-                                />))
-                            }
-                          </Grid>)
-                    }
-                    {
-                      this.state.loadingMore
+                      </Item>
+                    </Segment>
+                  </Sticky>
+                </Grid.Column>
+                <Grid.Column
+                  className="fill-content"
+                  mobile={16}
+                  tablet={8}
+                  computer={12}
+                >
+                  {
+                    this.state.loading ? <LoadingIndicator />
+                      : (
+                        <Grid id="results">
+                          {
+                            reposList.map(repo =>
+                              (<ResultRow
+                                key={`result_row_${repo.id}`}
+                                repo={repo}
+                              />))
+                          }
+                        </Grid>)
+                  }
+                  {
+                    this.state.loadingMore
                       &&
                       <Segment style={{ minHeight: 100 }}>
                         <LoadingIndicator />
                       </Segment>
-                    }
-                    {
-                      userData.public_repos === 0
+                  }
+                  {
+                    userData.public_repos === 0
                       &&
                       <PageNotFound
                         message="This user has no public repos!"
                         style={{ marginTop: '2em' }}
                       />
-                    }
-                  </Grid.Column>
-                  <Grid.Column className="center aligned" mobile={16}>
-                    <Divider section />
-                    {
-                      !this.state.autoload && !this.state.loadingMore
+                  }
+                </Grid.Column>
+                <Grid.Column className="center aligned" mobile={16}>
+                  <Divider section />
+                  {
+                    !this.state.autoload && !this.state.loadingMore
                       &&
                       <Fragment>
                         {
@@ -274,11 +274,12 @@ class ResultList extends React.Component {
                           </Item>
                         }
                       </Fragment>
-                    }
-                  </Grid.Column>
-                </Grid>
-              </Fragment>
-            )
+                  }
+                </Grid.Column>
+              </Grid>
+            </Fragment>
+          )
+          // if no user data we are fetching content
             : <LoadingIndicator />
         }
       </div>
