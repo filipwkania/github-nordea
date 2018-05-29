@@ -77,7 +77,7 @@ const InfoPage = (props, context) => (
     <br />
     <p>Example searches:</p>
     <Grid style={{ paddingLeft: '1rem' }}>
-      <Grid.Row>
+      <Grid.Row className="example-buttons">
         <Button
           icon="windows"
           content="Microsoft"

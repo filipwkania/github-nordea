@@ -101,4 +101,8 @@ main {
     .search-panel-input {
         max-width: 250px
     }
+
+    .example-buttons > button {
+        margin-top: 3px !important;
+    }
 }
