@@ -33,7 +33,7 @@ const InfoPage = (props, context) => (
             <br />
               We can turn off autoload in settings, which will cause the regular pagination to appear.
             <br />
-              If user has more than 5 pages (100 repos) of content, a "Jump to page" component will appear.
+              If a user has more than 5 pages (100 repos) of content, a "Jump to page" component will appear.
             <br />
               Autoloading is fixed in the menu pages: "Most starred" and "Most forked".
             <br />
