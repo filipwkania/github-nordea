@@ -25,9 +25,21 @@ const ResultRow = ({ repo }) => (
               justifyContent: 'space-between',
             }}
           >
-            <span>{repo.name}</span>
+            <Popup
+              content="Open on GitHub"
+              size="small"
+              trigger={
+                <a
+                  href={repo.html_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ minWidth: 150 }}
+                >
+                  <span>{repo.name}</span>
+                </a>}
+            />
             <div style={{
-              minWidth: 80,
+              minWidth: 49,
               marginLeft: 5,
             }}
             >
@@ -60,24 +72,6 @@ const ResultRow = ({ repo }) => (
                     <Icon
                       color="grey"
                       name="download"
-                      style={{
-                        fontSize: '0.9em',
-                      }}
-                    />
-                  </a>}
-              />
-              <Popup
-                content="Open on GitHub"
-                size="small"
-                trigger={
-                  <a
-                    href={repo.html_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Icon
-                      color="grey"
-                      name="external"
                       style={{
                         fontSize: '0.9em',
                         margin: 0,
@@ -118,24 +112,38 @@ const ResultRow = ({ repo }) => (
                   content="Stars"
                   size="small"
                   trigger={
-                    <Label
-                      icon="star"
-                      content={repo.stargazers_count}
-                    />}
+                    <Label>
+                      <a
+                        href={`${repo.html_url}/stargazers`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Icon name="star" />
+                        {repo.stargazers_count}
+                      </a>
+                    </Label>
+                  }
                 />
             }
             {
               repo.forks_count > 0
-            &&
-            <Popup
-              content="Forks"
-              size="small"
-              trigger={
-                <Label
-                  icon="fork"
-                  content={repo.forks_count}
-                />}
-            />
+                &&
+                <Popup
+                  content="Forks"
+                  size="small"
+                  trigger={
+                    <Label>
+                      <a
+                        href={`${repo.html_url}/forks`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Icon name="fork" />
+                        {repo.forks_count}
+                      </a>
+                    </Label>
+                  }
+                />
             }
           </Item.Extra>
         </Item.Content>
