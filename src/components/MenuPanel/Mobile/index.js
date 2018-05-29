@@ -10,6 +10,7 @@ const MobileMenu = ({ links }, context) => (
     item
     icon="bars"
     simple
+    style={{ minWidth: 68 }}
   >
     <Dropdown.Menu direction="left">
       {

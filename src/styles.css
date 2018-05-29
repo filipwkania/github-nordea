@@ -34,6 +34,11 @@
     border-radius: 0 !important;
 }
 
+.search-panel-input {
+    min-width: 0 !important;
+    flex-shrink: 1;
+}
+
 .search-panel-input > .results > .result  {
     display: flex !important;
 }
@@ -96,10 +101,6 @@ main {
 @media only screen and (max-width: 321px) {
     .app-footer .item {
         margin: 0 3px !important;
-    }
-
-    .search-panel-input {
-        max-width: 250px
     }
 
     .example-buttons > button {

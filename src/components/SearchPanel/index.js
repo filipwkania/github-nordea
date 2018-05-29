@@ -85,8 +85,12 @@ class SearchPanel extends React.Component {
         showNoResults={searchResults.length === 0}
         onSearchChange={({ target: { value } }) => this.onChange(value)}
         onResultSelect={(e, { result }) => this.onSelect(result)}
-        style={{ flexGrow: 1 }}
         placeholder="Type github username..."
+        style={{
+          flexGrow: 1,
+          minWidth: '0 !important',
+          flexShrink: 1,
+        }}
       />
     );
   }
