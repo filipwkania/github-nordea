@@ -16,6 +16,7 @@ const Main = () => (
         <Route exact path="/404" render={props => <PageNotFound message="User not found! Try another search." {...props} />} />
         <Route exact path="/:name/:page" component={ResultList} />
         <Route exact path="/:name/" component={ResultList} />
+        <Route exact path="*" render={props => <PageNotFound message="Page not found!" {...props} />} />
       </Switch>
     </Container>
   </main>
