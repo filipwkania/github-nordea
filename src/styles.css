@@ -54,6 +54,7 @@
 
 .result-item {
     transition: background 200ms linear;
+    word-break: break-word;
 }
 
 .result-item:hover {
