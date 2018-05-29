@@ -133,7 +133,7 @@ const ResultRow = ({ repo }) => (
                   size="small"
                   trigger={
                     <a
-                      href={`${repo.html_url}/forks`}
+                      href={`${repo.html_url}/network/members`}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
