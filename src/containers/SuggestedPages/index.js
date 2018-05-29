@@ -104,7 +104,7 @@ class SuggestedPages extends React.Component {
     }
   };
 
-  isBottom = el => el.getBoundingClientRect().bottom <= window.innerHeight;
+  isBottom = el => el && el.getBoundingClientRect().bottom <= window.innerHeight;
 
   renderItem = (name) => {
     const { starred, forked } = this.state;
