@@ -187,7 +187,10 @@ class ResultList extends React.Component {
                           label="Autoload content"
                           defaultChecked={userData.public_repos > perPage}
                           onChange={(e, data) => this.setState({ autoload: data.checked })}
-                          style={{ marginTop: '1em' }}
+                          style={{
+                            marginTop: '1em',
+                            display: 'block',
+                          }}
                         />
                         <Item style={{ marginTop: '1em' }}>
                           <Dropdown
