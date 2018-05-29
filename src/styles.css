@@ -61,8 +61,8 @@
     background: rgba(0,0,0,.02) !important;
 }
 
-.result-item .extra .label > a {
-    opacity: 1 !important;
+.result-item .extra > a > .label {
+    margin: 0.1rem !important;
 }
 
 .home-page-content {

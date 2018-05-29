@@ -112,16 +112,16 @@ const ResultRow = ({ repo }) => (
                   content="Stars"
                   size="small"
                   trigger={
-                    <Label>
-                      <a
-                        href={`${repo.html_url}/stargazers`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
+                    <a
+                      href={`${repo.html_url}/stargazers`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Label>
                         <Icon name="star" />
                         {repo.stargazers_count}
-                      </a>
-                    </Label>
+                      </Label>
+                    </a>
                   }
                 />
             }
@@ -132,16 +132,16 @@ const ResultRow = ({ repo }) => (
                   content="Forks"
                   size="small"
                   trigger={
-                    <Label>
-                      <a
-                        href={`${repo.html_url}/forks`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
+                    <a
+                      href={`${repo.html_url}/forks`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Label>
                         <Icon name="fork" />
                         {repo.forks_count}
-                      </a>
-                    </Label>
+                      </Label>
+                    </a>
                   }
                 />
             }
