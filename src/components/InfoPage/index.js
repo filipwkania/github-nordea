@@ -1,9 +1,10 @@
 /* eslint max-len: 0 */
 /* eslint react/no-unescaped-entities: 0 */
 import React from 'react';
-import { Container, List } from 'semantic-ui-react';
+import { Container, List, Grid, Button } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 
-const InfoPage = () => (
+const InfoPage = (props, context) => (
   <Container className="info-page">
     <h2> Github Repo Viewer </h2>
     <p style={{ fontSize: 20 }}>
@@ -28,12 +29,17 @@ const InfoPage = () => (
           <List.Description>
               On a user page, we can see the list of public repositories, fetched 20 at a time, as well as basic user info.
             <br />
-              Pagination is included at the bottom of the page, allowing to fetch next batch of repos.
+              If a user has more than 20 repos, we will autoload next batch when scrolling reaches the bottom of the current list.
             <br />
-              An example of autoloading new content is included in the menu
-              pages: "Most starred" and "Most forked".
+              We can turn off autoload in settings, which will cause the regular pagination to appear.
+            <br />
+              If user has more than 5 pages (100 repos) of content, a "Jump to page" component will appear.
+            <br />
+              Autoloading is fixed in the menu pages: "Most starred" and "Most forked".
             <br />
               Aforementioned pages are fetching top starred and top forked repos from whole GitHub.
+            <br />
+              We can also sort fetched repos on user page by last created, last updated or default (by name).
           </List.Description>
         </List.Content>
       </List.Item>
@@ -42,7 +48,7 @@ const InfoPage = () => (
         <List.Content>
           <List.Header>Search history</List.Header>
           <List.Description>
-              List of last 10 searches is accessible from the menu under "Recent searchers". History is bound to session.
+              List of last 10 searches is accessible from the menu under "Recent searchers". History is bound to our session.
           </List.Description>
         </List.Content>
       </List.Item>
@@ -66,7 +72,34 @@ const InfoPage = () => (
         </List.Content>
       </List.Item>
     </List>
+    <h2>Enjoy! </h2>
+    <br />
+    <br />
+    <p>Example searches:</p>
+    <Grid style={{ paddingLeft: '1rem' }}>
+      <Grid.Row>
+        <Button
+          icon="windows"
+          content="Microsoft"
+          onClick={() => context.router.history.push('/microsoft')}
+        />
+        <Button
+          icon="google"
+          content="Google"
+          onClick={() => context.router.history.push('/google')}
+        />
+        <Button
+          icon="smile"
+          content="Me"
+          onClick={() => context.router.history.push('/filipwkania')}
+        />
+      </Grid.Row>
+    </Grid>
   </Container>
 );
+
+InfoPage.contextTypes = {
+  router: PropTypes.object,
+};
 
 export default InfoPage;

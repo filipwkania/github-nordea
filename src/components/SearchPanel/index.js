@@ -69,7 +69,7 @@ class SearchPanel extends React.Component {
           });
         });
     });
-  }, 400);
+  }, 350);
 
   render() {
     const {

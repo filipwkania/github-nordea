@@ -182,6 +182,13 @@ class ResultList extends React.Component {
                       <UserInfoPanel userData={userData} />
                       <Segment>
                         <Icon name="options" /> <span>Settings</span>
+                        <Checkbox
+                          toggle
+                          label="Autoload content"
+                          defaultChecked={userData.public_repos > perPage}
+                          onChange={(e, data) => this.setState({ autoload: data.checked })}
+                          style={{ marginTop: '1em' }}
+                        />
                         <Item style={{ marginTop: '1em' }}>
                           <Dropdown
                             placeholder="Sort method"
@@ -190,13 +197,6 @@ class ResultList extends React.Component {
                             options={sortByOptions}
                           />
                         </Item>
-                        <Checkbox
-                          toggle
-                          label="Autoload content"
-                          defaultChecked={userData.public_repos > perPage}
-                          onChange={(e, data) => this.setState({ autoload: data.checked })}
-                          style={{ marginTop: '1em' }}
-                        />
                       </Segment>
                     </Sticky>
                   </Grid.Column>
