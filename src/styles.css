@@ -78,6 +78,10 @@
     margin-top: 90px;
 }
 
+.result-profile-sticky > div:nth-child(2) {
+    z-index: 1;
+}
+
 @media only screen and (max-width: 767px) {
     .result-profile-sticky > div:nth-child(2) {
         position: inherit !important;
