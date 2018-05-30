@@ -70,7 +70,11 @@
     margin-top: 1em !important;
 }
 
-main {
+.user-info-panel a {
+    max-height: 300px;
+}
+
+.main {
     margin-top: 90px;
 }
 

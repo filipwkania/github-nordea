@@ -7,7 +7,7 @@ import SuggestedPages from '../../containers/SuggestedPages';
 import PageNotFound from '../../components/PageNotFound';
 
 const Main = () => (
-  <main className="fill-content">
+  <div className="main fill-content">
     <Container style={{ marginBottom: 30 }} className="fill-content">
       <Switch>
         <Route exact path="/" render={props => <SuggestedPages {...props} />} />
@@ -19,7 +19,7 @@ const Main = () => (
         <Route exact path="*" render={props => <PageNotFound message="Page not found!" {...props} />} />
       </Switch>
     </Container>
-  </main>
+  </div>
 );
 
 export default Main;
